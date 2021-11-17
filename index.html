@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title> Java Cafe </title>
+<script src="https://simplycodingcourses.com/files/simply.js"></script>
+<script src="JS_files/Tween.js" type="text/javascript"></script>
+<script src="JS_files/globalVariables.js" type="text/javascript"></script>
+<script src="JS_files/transition.js" type="text/javascript"></script>
+<script src="JS_files/screen1.js" type="text/javascript"></script>
+<script src="JS_files/screen2.js" type="text/javascript"></script>
+<script src="JS_files/screen3.js" type="text/javascript"></script>
+<script src="JS_files/screen4.js" type="text/javascript"></script>
+<script src="JS_files/menuBar.js" type="text/javascript"></script>
+<script src="JS_files/modeSelect.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="JS_files/trans.css">
+
+<script>
+function start(){
+	sjs.open();
+	// get audio
+	var onBeginAudio = new Audio("Audio/2Enter.OGG");
+	var TitleBGM = new Audio("Audio/1Title.mp3");
+
+
+/*
+notes :
+
+ALL FIXED
+
+MOVE TO IS A LOT MORE SENSITIVE, KEEP THAT IN MIND!!!
+
+
+NEGATIVE IS UP, POSITIVE IS DOWN ACCORDING TO Y
+
+POS IS RIGHT NEG IS LEFT FOR X */
+
+
+var gameWindow = sjs.open("target",1600,1000);
+document.body.style.backgroundColor = "black";
+
+
+var background = new sjs.Image("Images/BG.png");
+background.node.style.zIndex = 0;
+background.type = "mainMenu";
+background.setSize(1600,500);
+background.center();
+
+var clouds = new sjs.Image("Images/Clouds.gif");
+clouds.node.style.zIndex = 0;
+clouds.type = "mainMenu";
+clouds.noBounds = true;
+clouds.moveTo(-260,100);
+
+var cafeIcon = new sjs.Image("Images/Cafe.png");
+cafeIcon.node.style.zIndex = 0;
+cafeIcon.type = "mainMenu";
+cafeIcon.moveTo(460,260);
+
+var tree1 = new sjs.Image("Images/TreeAnim.gif");
+tree1.node.style.zIndex = 0;
+tree1.type = "mainMenu";
+tree1.moveTo(-200,220);
+tree1.noBounds = true;
+
+var tree2 = new sjs.Image("Images/TreeAnim.gif");
+tree2.node.style.zIndex = 0;
+tree2.type = "mainMenu";
+tree2.moveTo(1300,220);
+tree2.noBounds = true;
+
+var barrier1 = new sjs.Image("Images/DarkBorder.png");
+barrier1.node.style.zIndex = 0;
+barrier1.type = "mainMenu";
+barrier1.moveTo(0,-1000);
+var barrier2 = new sjs.Image("Images/DarkBorder.png");
+barrier2.node.style.zIndex = 0;
+barrier2.type = "mainMenu";
+barrier2.moveTo(0,1000);
+
+var beginTXT = new sjs.Text("Press SPACE to begin",200,"grey");
+beginTXT.node.style.zIndex = 0;
+beginTXT.type = "mainMenu";
+beginTXT.node.style.fontFamily = "International Font of Mystery";
+beginTXT.center().bottom();
+
+var titleJavaCafe = new sjs.Image("Images/logo.gif");
+titleJavaCafe.node.style.zIndex = 0;
+titleJavaCafe.moveTo(390,-100);
+titleJavaCafe.noBounds = true;
+
+var codehasrun = false; // so it doesnt trigger 5 million times
+
+sjs.keyDown(SPACE_KEY, function startgame(){ //WHEN SPACE IS PRESSED
+	if (codehasrun == false) {
+		codehasrun = true;
+		cafeIcon.destroy(); // destroy old cafe icon and replace with anim
+		var cafeAnim = new sjs.Image("Images/CafeAnim.gif");
+		cafeAnim.moveTo(460,260);
+		onBeginAudio.play();
+		setTimeout(function(){
+			cafeAnim.destroy();
+			var cafeEnter = new sjs.Image("Images/Cafe_Open.png");
+			cafeEnter.type = "mainMenu";
+			cafeEnter.moveTo(460,260);
+			transition();
+			setTimeout(function(){
+				window.currentscreen = 0.5
+				mainModeSelect(); // go to modeSelect.js
+			}, 200);
+		},400);
+}
+});
+
+
+} //end start
+</script>
+</head>
+<body onload="start()">
+<div id="mainLabel"> Haha you BROKE the game!! Lameo</div>
+<div id="target" style="margin:auto;background:black;"></div>
+</body>
+</html>
+
+
