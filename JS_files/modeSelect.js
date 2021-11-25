@@ -28,6 +28,7 @@ function mainModeSelect() {
 
 		var campaignBtn = new sjs.Button("Campaign", function(){
 			transition();
+			STARTspawningNPCS();
 			setTimeout(function(){
 				window.currentScreen = 1
 				screen1(); // HEAD TO SCREEN 1

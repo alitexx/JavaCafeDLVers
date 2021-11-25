@@ -3,13 +3,13 @@ var drinksBeingMade = {
 	numTwo: null, // drink 2
 	numThree: null // drink 3
 };
-
 // BE SURE TO COME BACK HERE TO MAKE SURE TO CLEAR DICTIONARY WHEN DONE
 // THATS HOW I'LL BE ABLE TO CONTINUE
-var currentScreen = 0
+
+var currentScreen = 0 // keeps track of streen player is currently on
 var cupsCurrentlyUsed = 0 // helps check if user made too many
 
-var customersBeingServed = {
+var customersBeingServed = { // customer orders you are carrying
 	numOne: null,
 	numTwo: null,
 	numThree: null,
@@ -22,26 +22,28 @@ var ALLcustomerOrders = {
 				size: "Large",
 				drinkType: "Battery_Acid",
 				latte: "yes"
-				// add more customizations, now I should complete other maps so I know
-				// what I'm dealing with
+				// add more customizations
 			}
 
 }
 
 var DISPLAYED_customer_order = { // IMAGE LINKS FOR EASIER CALLING
-	"Spamton": {
+	"Images/customerData/customer1.png": {
 				"name": "Spamton",
 				"size": "Images/drinkTypeButtons/large_empty.png",
 				"drinkType": "Images/drinkTypeButtons/battery_acid.png",
-				"latte": "add image for latte y or n here"
+				"latte": "Images/drinkTypeButtons/FrotherYES.png",
+				"toppings" : ["Images/screen4Items/bottle_Whipped.png"]
+				// i made it a list bc other toppings will be in a list
 			}
 }
 
-var NPCstats = null
+var NPCstats = null // current npc waiting
+
 function findNewCustomer(){ // leaving this code here, USE A SWITCH STATEMENT!!!!!
 	switch (Math.round(Math.random(0,1))) { // change num according to new npcs being added
 		case 0: // spammy
-		// IDEA : Make a running variable? sets different things according to var
+		// spamton still spawns MANY TIMES so have it cut it out
 			NPCstats = spawnNPC("Spamton", "Images/customerData/customer1.png", ALLcustomerOrders["Spamton"],"Images/customerData/customer1Interract.gif");
 			break;
 		case 1:
@@ -53,14 +55,18 @@ function findNewCustomer(){ // leaving this code here, USE A SWITCH STATEMENT!!!
 
 
 customerWaiting = false; // checks if theres a customer
-setInterval(function (){ // customer walking in
-	if (customerWaiting == false){
-		findNewCustomer();
-		// play sfx here for bell chime, GET BELL CHIME!!!
-		customerWaiting = true;
-		spawningInACustomer(); // made a separate function for finding customer
-		} // ends func
-}, 15000); // every 15 seconds, initial spawn 2.5 seconds in
+
+function STARTspawningNPCS(){
+	setInterval(function (){
+		if (customerWaiting == false){
+			findNewCustomer(); // find someone to fill spot
+			// play sfx here for bell chime, GET BELL CHIME!!!
+			customerWaiting = true;
+			spawningInACustomer();
+			} // ends func
+	}, 10000); // every 10 seconds, initial spawn 2.5 seconds in
+} // ends start spawning npcs funct
+
 
 
 function spawningInACustomer(){ // NEED ANOTHER CHECK HERE, CHECK IF SOMEONE IS HERE!
@@ -74,13 +80,13 @@ function spawningInACustomer(){ // NEED ANOTHER CHECK HERE, CHECK IF SOMEONE IS 
 		}
 		if (window.currentScreen == 1){
 			var awaitingOrderCustomer = new sjs.Image(NPCstats[0]);
-			awaitingOrderCustomer.node.style.zIndex = 1;
+			awaitingOrderCustomer.node.style.zIndex = 0;
 			awaitingOrderCustomer.setSize(412.5,536.25);
 			awaitingOrderCustomer.moveTo(1200,370);
 
 
 			var clickToTakeOrder = new sjs.Image("Images/customerData/newCustomer.gif");
-			clickToTakeOrder.node.style.zIndex = 1;
+			clickToTakeOrder.node.style.zIndex = 0;
 			clickToTakeOrder.moveTo(850,200);
 
 			clickToTakeOrder.onMouseDown(function(){
@@ -88,7 +94,7 @@ function spawningInACustomer(){ // NEED ANOTHER CHECK HERE, CHECK IF SOMEONE IS 
 				clickToTakeOrder.destroy(); // destroy customer graphics
 
 				var takingCustomersOrder = new sjs.Image(NPCstats[1]);
-				takingCustomersOrder.node.style.zIndex = 1;
+				takingCustomersOrder.node.style.zIndex = 0;
 				takingCustomersOrder.setSize(412.5,536.25);
 				takingCustomersOrder.moveTo(1200,370);
 
@@ -97,8 +103,11 @@ function spawningInACustomer(){ // NEED ANOTHER CHECK HERE, CHECK IF SOMEONE IS 
 				ticketForOrder.setSize(630, 819);
 				ticketForOrder.center();
 
-				display_order(DISPLAYED_customer_order["Spamton"]);
+				display_order(DISPLAYED_customer_order[NPCstats[0]]);
 
+				customerWaiting = false; // make sure this executes LAST
+				// if timed right, customer waiting will execute before order is done.
+				// make sure to fix this in the final draft
 				})// end mouse down
 			} // ends if
 		} // ends func

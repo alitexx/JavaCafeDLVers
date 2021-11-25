@@ -5,10 +5,11 @@ function menuBar() {
 	bgBar.node.style.zIndex = 5;
 	var screen1btn = new sjs.Button("Order", function(){
 		transition();
-		screen1();
 		window.currentScreen = 1;
-		menuBar();
-		spawningInACustomer();
+		setTimeout(function (){
+			screen1();
+			checksForSwitchingScreens("screen1"); // below
+		}, 200);
 		});
 	screen1btn.node.style.zIndex = 6;
 	screen1btn.node.style.fontFamily = "Apple Kid"
@@ -23,10 +24,11 @@ function menuBar() {
 
 	var screen2btn = new sjs.Button("Prep", function(){
 		transition();
-		screen2();
 		window.currentScreen = 2;
-		menuBar();
-		spawningInACustomer();
+		setTimeout(function (){
+			screen2();
+			checksForSwitchingScreens("screen2"); // below
+		}, 200);
 		});
 	screen2btn.node.style.zIndex = 6;
 	screen2btn.node.style.fontFamily = "Apple Kid"
@@ -40,10 +42,11 @@ function menuBar() {
 
 	var screen3btn = new sjs.Button("Brew", function(){
 		transition();
-		screen3();
 		window.currentScreen = 3;
-		menuBar();
-		spawningInACustomer();
+		setTimeout(function (){
+			screen3();
+			checksForSwitchingScreens("screen3");// below
+		}, 200);
 		});
 	screen3btn.node.style.zIndex = 6;
 	screen3btn.node.style.fontFamily = "Apple Kid"
@@ -58,10 +61,11 @@ function menuBar() {
 
 	var screen4btn = new sjs.Button("Extras", function(){
 		transition();
-		screen4();
 		window.currentScreen = 4;
-		menuBar();
-		spawningInACustomer();
+		setTimeout(function (){
+			screen4();
+			checksForSwitchingScreens("screen4"); //below
+		}, 200);
 		});
 	screen4btn.node.style.zIndex = 6;
 	screen4btn.node.style.fontFamily = "Apple Kid"
@@ -73,4 +77,68 @@ function menuBar() {
 	screen4btn.type = "screenSelector"
 	screen4btn.moveTo(1150, 25);
 	
+}
+
+function checksForSwitchingScreens(headingTo){ // EVERYTHING that must be seen when switching from screen a to b
+
+	// maybe have different sections in here for what screen they're going to?
+	// like have an input of screen1 and a switch statement that runs code accordingly
+	switch(headingTo) {
+		case "screen1":
+			if (customerWaiting == true){
+					spawningInACustomer();
+			}
+			if (typeof scoopOfBeans != "undefined"){
+				scoopOfBeans.node.style.zIndex = -1;
+				}
+			if (typeof insertedScoop != "undefined"){
+				insertedScoop.node.style.zIndex = -1;
+			}
+			if (typeof moveable_Lcup1 != "undefined"){
+				moveable_Lcup1.node.style.zIndex = -1;
+			}
+			if (typeof moveable_Scup1 != "undefined"){
+				moveable_Scup1.node.style.zIndex = -1;
+			}
+			break;
+
+		case "screen2":
+			if (customerWaiting == true){
+					spawningInACustomer();
+			}
+			if (typeof scoopOfBeans != "undefined"){
+				scoopOfBeans.node.style.zIndex = 1;
+				}
+			if (typeof insertedScoop != "undefined"){
+				insertedScoop.node.style.zIndex = -1;
+			}
+			if (typeof moveable_Lcup1 != "undefined"){
+				moveable_Lcup1.node.style.zIndex = -1;
+			}
+			if (typeof moveable_Scup1 != "undefined"){
+				moveable_Scup1.node.style.zIndex = -1;
+			}
+		break;
+
+		case "screen3":
+			if (customerWaiting == true){
+					spawningInACustomer();
+			}
+			if (typeof scoopOfBeans != "undefined"){
+				scoopOfBeans.node.style.zIndex = -1;
+				}
+			if (typeof insertedScoop != "undefined"){
+				insertedScoop.node.style.zIndex = 1;
+			}
+			if (typeof moveable_Lcup1 != "undefined"){
+				moveable_Lcup1.node.style.zIndex = 1;
+			}
+			if (typeof moveable_Scup1 != "undefined"){
+				moveable_Scup1.node.style.zIndex = 1;
+			}
+		break;
+
+	}
+	
+	// make sure to change back when going back to the screen
 }

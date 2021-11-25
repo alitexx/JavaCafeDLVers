@@ -1,5 +1,7 @@
 // SECOND SCREEN, GET DRINK FLAVOR
 
+
+var scoopOfBeans; // made it a global
 var scoopOut = false;
 function screen2() {
 	//bg
@@ -138,7 +140,7 @@ function screen2() {
 function onClickButtons(scoopImage, scoopOut) {
 		if (scoopOut == false){
 			scoopOut = true;
-			var scoopOfBeans = new sjs.Image(scoopImage);
+			scoopOfBeans = new sjs.Image(scoopImage);
 			scoopOfBeans.moveTo(700,600);
 			scoopOfBeans.type = "Beans";
 			scoopOfBeans.draggable();
