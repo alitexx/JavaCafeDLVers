@@ -2,6 +2,10 @@
 
 // this only holds the data for the mode select screen, NOTHING ELSE. 
 var musicCompleted = false; //remember to reset when player leaves
+var backgroundMMS;
+var MENUtxt;
+var campaignBtn;
+var customBtn;
 function mainModeSelect() {
 // audio
 
@@ -9,25 +13,25 @@ function mainModeSelect() {
 	var menuAudio = new Audio("Audio/3Alt_Menu.ogg");
 	// maybe button sfx
 	if (musicCompleted == false) {
-    	musicCompleted = true;
+    	musicCompleted = null;
 		menuAudio.play(); // stops from firing 50 times
 		menuAudio.loop = true;
   }
 
-		var background = new sjs.Image("Images/MenuBG.png");
-		background.center();
-		background.type = "modeSelect";
-		background.node.style.zIndex = 0;
+		backgroundMMS = new sjs.Image("Images/mainMenu/MenuBG.png");
+		backgroundMMS.center();
+		backgroundMMS.type = "modeSelect";
+		backgroundMMS.node.style.zIndex = 0;
 
-		var MENUtxt = new sjs.Text("MENU",200,"red");
+		MENUtxt = new sjs.Text("MENU",200,"red");
 		MENUtxt.node.style.fontFamily = "International Font of Mystery";
 		MENUtxt.type = "modeSelect";
 		MENUtxt.moveTo(700,0);
 
-		
-
-		var campaignBtn = new sjs.Button("Campaign", function(){
-			transition();
+	
+		campaignBtn = new sjs.Button("Campaign", function(){
+			onBeginAudio = null;
+			transition("mainMenu");
 			STARTspawningNPCS();
 			setTimeout(function(){
 				window.currentScreen = 1
@@ -35,6 +39,7 @@ function mainModeSelect() {
 				menuBar();
 				// audio change
 				menuAudio.pause();
+				menuAudio = null;
 			},250);
 			var overworldBGM = new Audio("Audio/4BGM.wav");
 			overworldBGM.loop = true;
@@ -51,7 +56,7 @@ function mainModeSelect() {
 
 
 
-		var customBtn = new sjs.Button("Custom", function(){
+		customBtn = new sjs.Button("Custom", function(){
 			transition();
 			// i'll come back here
 			menuAudio.destroy();
