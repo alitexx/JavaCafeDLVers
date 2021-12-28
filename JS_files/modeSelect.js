@@ -13,7 +13,7 @@ function mainModeSelect() {
 // audio
 
 
-	var menuAudio = new Audio("Audio/3Alt_Menu.ogg");
+	var menuAudio = new Audio("Audio/3Alt_Menu.wav");
 	// maybe button sfx
 	if (musicCompleted == false) {
     	musicCompleted = null;
@@ -43,6 +43,9 @@ function mainModeSelect() {
 				// audio change
 				menuAudio.pause();
 				menuAudio = undefined;
+				// INITIAL SPAWN IN OF CUSTOMER WHEN GAME STARTS!!
+				findNewCustomer(); // find someone to fill spot
+				spawningInACustomer();
 			},250);
 			overworldBGM = new Audio("Audio/4BGM.wav");
 			overworldBGM.loop = true;

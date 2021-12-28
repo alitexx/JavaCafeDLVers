@@ -14,7 +14,6 @@ class Drink { // broken in internet explorer
 
   // Called on init
   constructor(slotNum, drinkItself, drinkType) {
-    console.log("The class has been created")
     this.brewingSlot = slotNum;
     this.cupSize = drinkItself.src;
     this.drinkType = drinkType;
@@ -29,6 +28,7 @@ class Drink { // broken in internet explorer
                 drinkItself.canBrew = false;
                 drinkItself.draggable();
                 drinkItself.type = "doneBrewing";
+                drinkItself.isBeingBrewed = false;
                 //window["timer"+area]
                 window["timer"+area].setImage("Images/brewTimer/timer_null.png");
                 window["insertedScoop"+area].destroy();
@@ -71,7 +71,7 @@ class Drink { // broken in internet explorer
   	// figure out the score based on actual order */
     switch(orderForm){
       case("Images/customerData/spamton_Menu.png"):
-        this.happiness = this.GRADING("Images/drinkTypeButtons/scoops/scoopBattery.png","Images/drinkTypeButtons/L_draggable.png", true,[null, 'Whipped Cream', undefined]);
+        this.happiness = this.GRADING("Images/drinkTypeButtons/scoops/scoopBattery.png","Images/drinkTypeButtons/L_draggable.png", true,[null, 'Whipped Cream', undefined, undefined]);
       // pass a list of his order into another function
       break;
       case "Images/customerData/UG_Menu.png" : // UG
@@ -81,13 +81,13 @@ class Drink { // broken in internet explorer
         this.happiness = this.GRADING("Images/drinkTypeButtons/scoops/scoopDarkEST.png","Images/drinkTypeButtons/L_draggable.png", true,[null,'Chocolate Syrup', 'Shot of Expresso', undefined]);
       break;
       case "Images/customerData/robin_Menu.png" : // robin
-        this.happiness = this.GRADING("Images/drinkTypeButtons/scoops/scoopGreen.png","Images/drinkTypeButtons/S_draggable.png", false,[null, 'Shot of Vanilla', undefined]);
+        this.happiness = this.GRADING("Images/drinkTypeButtons/scoops/scoopGreen.png","Images/drinkTypeButtons/S_draggable.png", false,[null, 'Shot of Vanilla', undefined, undefined]);
       break;
       case "Images/customerData/luigi_Menu.png" : // luigi
         this.happiness = this.GRADING("Images/drinkTypeButtons/scoops/scoopChai.png","Images/drinkTypeButtons/S_draggable.png", true,[null,'Shot of Vanilla', 'Peppermint Candy', undefined]);
       break;
       case "Images/customerData/SG_Menu.png" : // SG
-        this.happiness = this.GRADING("Images/drinkTypeButtons/scoops/scoopBattery.png","Images/drinkTypeButtons/L_draggable.png", false,[null, 'Shot of Pumpkin', undefined]);
+        this.happiness = this.GRADING("Images/drinkTypeButtons/scoops/scoopBattery.png","Images/drinkTypeButtons/L_draggable.png", false,[null, 'Shot of Pumpkin', undefined, undefined]);
       break;
       case "Images/customerData/glamrock_Menu.png" : // glamrock
         this.happiness = this.GRADING("Images/drinkTypeButtons/scoops/scoopDarker.png","Images/drinkTypeButtons/S_draggable.png", true,[null,'Chocolate Syrup', 'Cinnamon', undefined]);
@@ -96,7 +96,7 @@ class Drink { // broken in internet explorer
         this.happiness = this.GRADING("Images/drinkTypeButtons/scoops/scoopChai.png","Images/drinkTypeButtons/S_draggable.png", false,[null,'Caramel Syrup', 'Cinnamon', undefined]);
       break;
       case "Images/customerData/greg_Menu.png" : // greg
-        this.happiness = this.GRADING("Images/drinkTypeButtons/scoops/scoopChamo.png","Images/drinkTypeButtons/S_draggable.png", false,[null, 'Sugar Cube', undefined]);
+        this.happiness = this.GRADING("Images/drinkTypeButtons/scoops/scoopChamo.png","Images/drinkTypeButtons/S_draggable.png", false,[null, 'Sugar Cube', undefined, undefined]);
       break;
       case "Images/customerData/autumn_Menu.png" : // autumn
         this.happiness = this.GRADING("Images/drinkTypeButtons/scoops/scoopWhite.png","Images/drinkTypeButtons/S_draggable.png", true,[null,'Whipped Cream', 'Shot of Vanilla', 'Cinnamon']);
@@ -128,9 +128,12 @@ class Drink { // broken in internet explorer
 
     // toppings
     for (const [key, value] of Object.entries(toppingsList)) { // find npc
-      if (value == this.toppings[key]) {
+      if (value == this.toppings[key] && value != null) {
+        console.log("the point has been given for "+value);
         this.points = this.points + 10;
-      } 
+      } else if (typeof value == "undefined") {
+        this.points = this.points + 10;
+      }
     } // end for
 
     console.log(this.points);

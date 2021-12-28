@@ -350,6 +350,7 @@ function checkForDrinkMaking(scoopSlot, drinkSlot, area){ // first arg, name of 
 			brewingTimer(area, scoopSlot, drip3, drinkSlot);
 			drinksBeingMade[drinkSlot.numInLine] = new Drink(1, station3Taken, scoopSlot); // CLASS CREATION
 		}
+		drinkSlot.isBeingBrewed = true;
 	} // end if
 }
 
@@ -487,6 +488,7 @@ function spawnInCupRequested(size, cupsBeingUsed, key4numInLine){
 			window["moveable_Lcup"+cupsBeingUsed.toString()] = new sjs.Image("Images/drinkTypeButtons/L_draggable.png");
 			window["moveable_Lcup"+cupsBeingUsed.toString()].canBrew = true; // CHECKs if can be cooked
 			window["moveable_Lcup"+cupsBeingUsed.toString()].numInLine = key4numInLine.toString(); // where is it in the dict
+			window["moveable_Lcup"+cupsBeingUsed.toString()].isBeingBrewed = false;
 			window["moveable_Lcup"+cupsBeingUsed.toString()].node.style.zIndex = 1;
 			window["moveable_Lcup"+cupsBeingUsed.toString()].moveTo(1200,200);
 			window["moveable_Lcup"+cupsBeingUsed.toString()].type = "Cup";
@@ -512,6 +514,7 @@ function spawnInCupRequested(size, cupsBeingUsed, key4numInLine){
 			window["moveable_Scup"+cupsBeingUsed.toString()] = new sjs.Image("Images/drinkTypeButtons/S_draggable.png");
 			window["moveable_Scup"+cupsBeingUsed.toString()].canBrew = true; // checks if can be cooked
 			window["moveable_Scup"+cupsBeingUsed.toString()].numInLine = key4numInLine.toString(); // where is it in the dict
+			window["moveable_Scup"+cupsBeingUsed.toString()].isBeingBrewed = false;
 			window["moveable_Scup"+cupsBeingUsed.toString()].node.style.zIndex = 1;
 			window["moveable_Scup"+cupsBeingUsed.toString()].moveTo(1200,200);
 			window["moveable_Scup"+cupsBeingUsed.toString()].type = "Cup";

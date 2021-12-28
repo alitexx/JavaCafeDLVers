@@ -169,7 +169,7 @@ function findNewCustomer(){ // FINDS A NEW CUSTOMER TO BE SPAWNED, DOESNT DO ANY
 
 
 var customerWaiting = false; // checks if theres a customer
-var secondsUntilSpawn = 5000; // changes throughout the game, made it fast for testing
+var secondsUntilSpawn = 25000; // changes throughout the game, made it fast for testing
 
 
 
@@ -177,7 +177,6 @@ function STARTspawningNPCS(){ // THE LOOP OF SPAWNING CUSTOMERS
 	setInterval(function (){
 		if (customerWaiting == false){
 			findNewCustomer(); // find someone to fill spot
-			// play sfx here for bell chime, GET BELL CHIME!!
 			if (NPCstats != null){
 			spawningInACustomer();
 				}
@@ -261,12 +260,12 @@ function spawnNPC(customerComingIn, imageForspawn, talking_gif){ // CHECKS IF SO
 				break;
 			} else {slotOpen = 0;}
 			}// end for
-			
-				//set spamton as first null
 			if (slotOpen != 0) {
 					customersBeingServed[slotOpen] = customerComingIn; // sets null as their name
 					customerWaiting = true; // someone is here
-					doorbell.play();
+					if (window.currentScreen >= 5){ // makes sure player isnt being graded
+						doorbell.play();
+					}
 				}
 
 			return [imageForspawn, talking_gif];

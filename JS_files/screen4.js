@@ -79,12 +79,16 @@ function screen4() {
 		YES.onMouseDown(function(){
 			//																getSoundAndFadeAudio(overworldBGM); // TESTING THIS
 			overworldBGM.pause();
+			audioS5.load();
 			audioS5.play();
-			menuImage.setSize(276.5,450.5);
-			menuImage.destroy();
+
+			customersBeingServed[x.numInLine] = undefined; // delete their spot in line
+			delete(customersBeingServed[x.numInLine])
+
 			x.destroy();
 			x = undefined;
 			delete(x);
+
 			YES.destroy();
 			NO.destroy();
 			areYouSure.destroy();
@@ -111,8 +115,9 @@ function screen4() {
 				setTimeout(function (){
 					checksForSwitchingScreens(currentScreen,5);
 					currentScreen = 5;
-					screen5(menuImage.src);
+					screen5(menuImage.src, menuImage.numInLine);
 					canChangeScreens = true;
+					menuImage.destroy();
 				}, 250);
 			}
 			catch{
@@ -155,11 +160,11 @@ function screen4() {
 
 	item_choco = new sjs.Image("Images/screen4Items/bottle_Choco.png");
 	item_choco.type = "bottle";
-	item_choco.moveTo(1300,195);
+	item_choco.moveTo(1500,195);
 	item_choco.draggable();
 
 	item_choco.node.addEventListener('mouseup', function(){
-		item_choco.moveTo(1300,195);
+		item_choco.moveTo(1500,195);
 	});
 
 	item_sugarcube = new sjs.Image("Images/screen4Items/sugarcubes.png");
@@ -242,7 +247,7 @@ function screen4() {
 			case "Images/screen4Items/bottle_Choco.png": // chocolate
 				drinksBeingMade[cup.numInLine].addTopping("Chocolate Syrup");
 				inUseImage = new sjs.Image("Images/screen4Items/chocolate_pouring.png");
-				item.moveTo(1300,195);
+				item.moveTo(1500,195);
 			break;
 		}
 		inUseImage.moveTo(425,225);

@@ -7,3 +7,8 @@ body.fade-out {
   opacity: 0;
   transition: 0.25s opacity;
 }
+
+body.fade-out_FINAL {
+  opacity: 0;
+  transition: 3s opacity;
+}

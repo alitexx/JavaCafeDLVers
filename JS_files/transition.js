@@ -3,7 +3,15 @@
 
 
 function transition(screenNum){
-	document.body.classList.add('fade-out'); // fade out
+	var timeoutTimer = 250;
+	if (currentScreen == 6){
+		document.body.classList.add('fade-out_FINAL');
+		timeoutTimer = 3000
+	} else {
+		document.body.classList.add('fade-out');
+		timeoutTimer = 250
+	}
+	 // fade out
 	switch(screenNum){ // should I make all of the images global? that seems like a waste
 		case "opening": // title screen
 		screenBeingDestroyed = [background,clouds,cafeIcon,tree1,tree2,barrier1,barrier2,beginTXT,titleJavaCafe];
@@ -35,8 +43,10 @@ function transition(screenNum){
 		delete(item);
 		});
 	setTimeout(function(){ // fade back in
-		document.body.classList.remove('fade-out');
-	}, 250);
+	if (currentScreen == 6){
+		document.body.classList.remove('fade-out_FINAL');
+	} else {document.body.classList.remove('fade-out');}
+	}, timeoutTimer);
 } // end transition
 
 

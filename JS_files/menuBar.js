@@ -77,7 +77,6 @@ function menuBar() {
 		btn_clickSFX.play();
 		if (currentScreen != 4 && canChangeScreens == true){
 		transition(currentScreen);
-		currentScreen = 4;
 		setTimeout(function (){
 			screen4();
 			checksForSwitchingScreens(currentScreen,4);
@@ -108,7 +107,13 @@ function menuBar() {
 	garbage_btn.node.style.zIndex = 6;
 	garbage_btn.onMouseDown(function(){
 		// a function that lets you click on the item to delete
-		deleteItem();
+		if (deleteItem_Running == true){
+			deleteItem_Running = false;
+			deletebbl.destroy();
+			prompt_Text.destroy();
+		} else {
+			deleteItem();
+		} // GO TO GARBAGE_CAN.JS
 	});
 }
 
@@ -153,7 +158,7 @@ function spawningInMenu(customerOrderForm){
 	var menu_num = 0;
 	while (counter < 5){
 		counter = counter + 1
-		var checkingForOpenMenu = window["menu"+counter.toString()]
+		var checkingForOpenMenu = window["menu"+counter.toString()];
 		if (typeof checkingForOpenMenu == "undefined"){ // if the menu is undefined
 			window["menu"+counter.toString()] = new sjs.Image(customerOrderForm);
 			window["menu"+counter.toString()].draggable();
@@ -165,22 +170,27 @@ function spawningInMenu(customerOrderForm){
 				case 1:
 					menu1.moveTo(25,950);
 					menu1.menuPos = [25,950];
+					menu1.numInLine = "numOne";
 				break;
 				case 2:
 					menu2.moveTo(326.5,950);
 					menu2.menuPos = [326.5,950];
+					menu2.numInLine = "numTwo";
 				break;
 				case 3:
 					menu3.moveTo(628,950);
 					menu3.menuPos = [628,950];
+					menu3.numInLine = "numThree";
 				break;
 				case 4:
 					menu4.moveTo(929.5,950);
 					menu4.menuPos = [929.5,950];
+					menu4.numInLine = "numFour";
 				break;
 				case 5:
 					menu5.moveTo(1231,950);
 					menu5.menuPos = [1231,950];
+					menu5.numInLine = "numFive";
 				break;
 			}// end switch
 			menu_num = counter;
@@ -305,21 +315,4 @@ function checksForSwitchingScreens(leaving, entering){ // EVERYTHING that must b
 			if (typeof moveable_Scup3 != "undefined" && moveable_Scup3.type == "onScreen4"){moveable_Scup3.node.style.zIndex = 1;}
 		break;
 	}	
-}
-
-
-function deleteItem(){
-	var deletebbl = new sjs.Image("Images/prompt2user.png");
-	deletebbl.moveTo(700,120);
-	deletebbl.node.style.zIndex = 20;
-	var prmpt_Text = new sjs.Text("Click an item to throw it away, click the garbage to cancel.",75,"white");
-	prmpt_Text.moveTo(730,185);
-	prmpt_Text.node.style.zIndex = 20;
-	prmpt_Text.node.style.fontFamily = "Apple Kid";
-	garbage_btn.onMouseDown(function(){ // this is gonna be tricky
-		deletebbl.destroy();
-		prmpt_Text.destroy();
-		return;
-	});
-
 }

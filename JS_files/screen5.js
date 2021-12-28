@@ -5,7 +5,7 @@ var customerGRADING; // tells us what the customer thinks!!!!!!
 var audioS5 = new Audio("Audio/grading.mp3");
 audioS5.loop = true;
 
-function screen5(menuImage){
+function screen5(menuImage, spotToBeDeleted){
 	background5 = new sjs.Image("Images/grading_screen.png");
 	background5.node.style.zIndex = 3;
 	background5.setSize(1600,800);
@@ -77,6 +77,8 @@ function screen5(menuImage){
 	customerRatingDisplayed.node.style.zIndex = 5;
 	customerRatingDisplayed.node.style.fontFamily = "Apple Kid";
 
+	switchToDeleteMenu(spotToBeDeleted);
+
 
 	setTimeout(function(){
 		// display image for smile :) or frown >:(
@@ -85,14 +87,19 @@ function screen5(menuImage){
 		face_Score.node.style.zIndex = 5;
 
 		continueBtn = new sjs.Button("Click To Continue", function (){
-			transition(5);
 			audioS5.pause();
 			FINISHEDCUSTOMERS = FINISHEDCUSTOMERS + 1 // add one to the tally of customers completed
 			if (FINISHEDCUSTOMERS >= 3){
+				hooray.play();
 				currentScreen = 6;
-				evalScreen();
+				transition(5);
+				setTimeout(function (){
+					evalScreen();
+				}, 2990);
 			} else {
 			setTimeout(function (){
+				transition(5);
+				overworldBGM.load();
 				overworldBGM.play();
 				checksForSwitchingScreens(currentScreen,1); // cannot fully delete items in a setTimeout function
 				currentScreen = 1;
@@ -114,4 +121,30 @@ function screen5(menuImage){
 
 		
 		}, 1500);
+}
+
+
+function switchToDeleteMenu(spotToBeDeleted){
+	switch(spotToBeDeleted){
+		case "numOne":
+			menu1 = undefined;
+			delete(menu1);
+		break;
+		case "numTwo":
+			menu2 = undefined;
+			delete(menu2);
+		break;
+		case "numThree":
+			menu3 = undefined;
+			delete(menu3);
+		break;
+		case "numFour":
+			menu4 = undefined;
+			delete(menu4);
+		break;
+		case "numFive":
+			menu5 = undefined;
+			delete(menu5);
+		break;
+	}
 }
