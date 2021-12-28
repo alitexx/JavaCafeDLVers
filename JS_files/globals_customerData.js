@@ -5,11 +5,14 @@ var drinksBeingMade = {
 };
 
 
-// BE SURE TO COME BACK HERE TO MAKE SURE TO CLEAR DICTIONARY WHEN DONE
-// THATS HOW I'LL BE ABLE TO CONTINUE
+var FINISHEDCUSTOMERS = 0; // VALUE THAT CHANGES BASED ON NUMBER OF CUSTOMERS SERVED
 
 var currentScreen = 0; // keeps track of streen player is currently on
 var cupsCurrentlyUsed = 0; // helps check if user made too many
+
+var GcustomerRating1; // stores what customers thought of the drink
+var GcustomerRating2;
+var GcustomerRating3;
 
 var menu1;
 var menu2;
@@ -45,7 +48,7 @@ var customersBeingServed = { // customer orders you are carrying
 }*/ // i dont think this is needed anymore
 
 var DISPLAYED_customer_order = { // IMAGE LINKS FOR EASIER CALLING
-	"Images/customerData/customer1.png": {
+	"Images/customerData/customer1.png": { // SPAMTON
 				"name": "Spamton",
 				"size": "Images/drinkTypeButtons/large_empty.png",
 				"drinkType": "Images/drinkTypeButtons/battery_acid.png",
@@ -53,20 +56,83 @@ var DISPLAYED_customer_order = { // IMAGE LINKS FOR EASIER CALLING
 				"toppings" : [null,"Images/screen4Items/whipped_btn.png"]
 				// i made it a list bc other toppings will be in a list
 			},
-	"Images/customerData/Customer2.png": { // WORK ON DISPLAYING A MENU FOR UG
+	"Images/customerData/Customer2.png": { // UG
 		"name": "UncleGrandpa",
 		"size": "Images/drinkTypeButtons/large_empty.png",
 		"drinkType": "Images/drinkTypeButtons/medium_roast.png",
 		"latte": "Images/drinkTypeButtons/FrotherYES.png",
 		"toppings" : ["Images/screen4Items/sugarcubes_Icon.png","Images/screen4Items/expresso.png"]
 
+		},
+	"Images/customerData/customer3.png": { // LEO
+		"name": "Leo",
+		"size": "Images/drinkTypeButtons/large_empty.png",
+		"drinkType": "Images/drinkTypeButtons/dark_roast.png",
+		"latte": "Images/drinkTypeButtons/FrotherYES.png",
+		"toppings" : ["Images/screen4Items/choco_syrup.png","Images/screen4Items/expresso.png"]
+
+	},
+	"Images/customerData/Customer4.png": { //ROBIN
+		"name": "Robin",
+		"size": "Images/drinkTypeButtons/small_empty.png",
+		"drinkType": "Images/drinkTypeButtons/green.png",
+		"latte": "Images/drinkTypeButtons/FrotherNO.png",
+		"toppings" : [null,"Images/screen4Items/vanilla.png"]
+
+	},
+	"Images/customerData/Customer5.png": { // LUIGI
+		"name": "Luigi",
+		"size": "Images/drinkTypeButtons/small_empty.png",
+		"drinkType": "Images/drinkTypeButtons/chai.png",
+		"latte": "Images/drinkTypeButtons/FrotherYES.png",
+		"toppings" : ["Images/screen4Items/vanilla.png","Images/screen4Items/peppermint_icon.png"]
+
+	},
+	"Images/customerData/Customer6.png": { // SCRATCH AND GROUNDER
+		"name": "S and G",
+		"size": "Images/drinkTypeButtons/large_empty.png",
+		"drinkType": "Images/drinkTypeButtons/battery_acid.png",
+		"latte": "Images/drinkTypeButtons/FrotherNO.png",
+		"toppings" : [null,"Images/screen4Items/pumpkin.png"]
+
+	},
+	"Images/customerData/Customer7.png": { // GLAMROCK
+		"name": "Glamrock",
+		"size": "Images/drinkTypeButtons/small_empty.png",
+		"drinkType": "Images/drinkTypeButtons/mediumDark_roast.png",
+		"latte": "Images/drinkTypeButtons/FrotherYES.png",
+		"toppings" : ["Images/screen4Items/choco_syrup.png","Images/screen4Items/cinnamon_Icon.png"]
+
+	},
+	"Images/customerData/Customer8.png": { // GINGERBRAVE
+		"name": "Gingerbrave",
+		"size": "Images/drinkTypeButtons/small_empty.png",
+		"drinkType": "Images/drinkTypeButtons/chai.png",
+		"latte": "Images/drinkTypeButtons/FrotherNO.png",
+		"toppings" : ["Images/screen4Items/cara_syrup.png","Images/screen4Items/cinnamon_Icon.png"]
+
+	},
+	"Images/customerData/Customer9.png": { // GREG
+		"name": "Greg",
+		"size": "Images/drinkTypeButtons/small_empty.png",
+		"drinkType": "Images/drinkTypeButtons/chamomile.png",
+		"latte": "Images/drinkTypeButtons/FrotherNO.png",
+		"toppings" : [null,"Images/screen4Items/sugarcubes_Icon.png"]
+
+	},
+	"Images/customerData/Customer10.png": { // AUTUMN
+		"name": "Autumn",
+		"size": "Images/drinkTypeButtons/small_empty.png",
+		"drinkType": "Images/drinkTypeButtons/white.png",
+		"latte": "Images/drinkTypeButtons/FrotherYES.png",
+		"toppings" : ["Images/screen4Items/whipped_btn.png","Images/screen4Items/vanilla.png","Images/screen4Items/cinnamon_Icon.png"]
 	}
 }
 
 var NPCstats = null // current npc waiting
 
 function findNewCustomer(){ // FINDS A NEW CUSTOMER TO BE SPAWNED, DOESNT DO ANY OF THE SPAWNING
-	switch (Math.round(Math.random(0,1))) { // change num according to new npcs being added
+	switch (Math.floor(Math.random() * 10)) { // change num according to new npcs being added
 		case 0: // spammy
 		// spamton still spawns MANY TIMES so have it cut it out
 			NPCstats = spawnNPC("Spamton", "Images/customerData/customer1.png","Images/customerData/customer1Interract.gif");
@@ -74,7 +140,31 @@ function findNewCustomer(){ // FINDS A NEW CUSTOMER TO BE SPAWNED, DOESNT DO ANY
 		case 1: // UG
 			NPCstats = spawnNPC("UncleGrandpa", "Images/customerData/Customer2.png","Images/customerData/Customer2Interract.gif");
 			break;
- 		}
+ 		case 2: // leo
+			NPCstats = spawnNPC("Leo", "Images/customerData/customer3.png","Images/customerData/customer3Interract.gif");
+			break;
+		case 3: // robin
+			NPCstats = spawnNPC("Robin", "Images/customerData/Customer4.png","Images/customerData/Customer4Interract.gif");
+			break;
+		case 4: // Luigi
+			NPCstats = spawnNPC("Luigi", "Images/customerData/Customer5.png","Images/customerData/Customer5Interract.gif");
+			break;
+		case 5: // scratch n grounder
+			NPCstats = spawnNPC("S and G", "Images/customerData/Customer6.png","Images/customerData/Customer6Interract.gif");
+			break;
+		case 6: // glamrock
+			NPCstats = spawnNPC("Glamrock", "Images/customerData/Customer7.png","Images/customerData/Customer7Interract.gif");
+			break;
+		case 7: // Gingerbrave
+			NPCstats = spawnNPC("Gingerbrave", "Images/customerData/Customer8.png","Images/customerData/Customer8Interract.gif");
+			break;
+		case 8: // Greg
+			NPCstats = spawnNPC("Greg", "Images/customerData/Customer9.png","Images/customerData/Customer9Interract.gif");
+			break;
+		case 9: // Autumn
+			NPCstats = spawnNPC("Autumn", "Images/customerData/Customer10.png","Images/customerData/Customer10Interract.gif");
+			break;
+		}
 	}// end funct
 
 
@@ -107,25 +197,37 @@ function spawningInACustomer(exception){ // ACTUALLY SPAWNS THE GRAPHICS
 			newCustomer.moveTo(175,10);
 		}
 		if (window.currentScreen == 1){
-			awaitingOrderCustomer = new sjs.Image(NPCstats[0]);
+			try {
+				console.log("trying to spawn");
+				awaitingOrderCustomer.setImage(NPCstats[0]);
+				clickToTakeOrder.setImage("Images/customerData/newCustomer.gif");
+			}
+			catch {
+				console.log("catch on spawn");
+				awaitingOrderCustomer = new sjs.Image(NPCstats[0]);
+				clickToTakeOrder = new sjs.Image("Images/customerData/newCustomer.gif");
+			}		
 			awaitingOrderCustomer.node.style.zIndex = 1;
-			awaitingOrderCustomer.setSize(412.5,536.25);
-			awaitingOrderCustomer.moveTo(1200,370);
-			console.log(awaitingOrderCustomer);
+			//awaitingOrderCustomer.setSize(412.5,536.25);
+			awaitingOrderCustomer.moveTo(1200,200);
 
 
-			clickToTakeOrder = new sjs.Image("Images/customerData/newCustomer.gif");
 			clickToTakeOrder.node.style.zIndex = 1;
 			clickToTakeOrder.moveTo(850,200);
 
 			clickToTakeOrder.onMouseDown(function(){
+				canChangeScreens = false;
 				awaitingOrderCustomer.destroy();
 				clickToTakeOrder.destroy(); // destroy customer graphics
+				awaitingOrderCustomer = undefined;
+				clickToTakeOrder = undefined;
+				delete(awaitingOrderCustomer);
+				delete(clickToTakeOrder);
 
 				var takingCustomersOrder = new sjs.Image(NPCstats[1]);
 				takingCustomersOrder.node.style.zIndex = 0;
-				takingCustomersOrder.setSize(412.5,536.25);
-				takingCustomersOrder.moveTo(1200,370);
+				//takingCustomersOrder.setSize(412.5,536.25);
+				takingCustomersOrder.moveTo(1200,200);
 
 				var ticketForOrder = new sjs.Image("Images/customerData/menu.png"); // potential tween
 				ticketForOrder.node.style.zIndex = 6;
@@ -133,6 +235,7 @@ function spawningInACustomer(exception){ // ACTUALLY SPAWNS THE GRAPHICS
 
 				var checkForContinue = display_order(DISPLAYED_customer_order[NPCstats[0]]);
 				setTimeout(function(){
+					canChangeScreens = true;
 					customerWaiting = false;
 					ticketForOrder.destroy();
 					takingCustomersOrder.destroy();

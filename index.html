@@ -12,8 +12,10 @@
 <script src="JS_files/screen3.js" type="text/javascript"></script>
 <script src="JS_files/screen4.js" type="text/javascript"></script>
 <script src="JS_files/screen5.js" type="text/javascript"></script>
+<script src="JS_files/evalScreen.js" type="text/javascript"></script>
 <script src="JS_files/menuBar.js" type="text/javascript"></script>
 <script src="JS_files/modeSelect.js" type="text/javascript"></script>
+
 
 <link rel="stylesheet" href="JS_files/trans.css">
 
@@ -110,6 +112,7 @@ sjs.keyDown(SPACE_KEY, function startgame(){ //WHEN SPACE IS PRESSED
 				cafeEnter.destroy();
 				window.currentscreen = 0.5
 				mainModeSelect(); // go to modeSelect.js
+				//evalScreen();
 			}, 200);
 		},400);
 }

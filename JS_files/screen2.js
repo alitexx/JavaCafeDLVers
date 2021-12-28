@@ -8,18 +8,17 @@ var scoopOut = false;
 function screen2() {
 	//bg
 	background2 = new sjs.Image("Images/screen2.png");
-	background2.node.style.zIndex = 0;
+	background2.node.style.zIndex = 0.01;
 
 	moveToScreen3 = new sjs.Image("Images/moveDrinkParts/moveToScreen3.png");
 	moveToScreen3.moveTo(1500,825);
 	moveToScreen3.type = "moveBlock";
-	moveToScreen3.node.style.zIndex = 0;
+	moveToScreen3.node.style.zIndex = 0.01;
 	
 	button1_scn2 = new sjs.Image("Images/drinkTypeButtons/battery_acid.png");
 	button1_scn2.type = "Game";
 	button1_scn2.setSize(95,95);
 	button1_scn2.moveTo(307,166);
-	button1_scn2.node.style.zIndex = 0;
 
 	button1_scn2.onMouseDown(function(){
 		// returns true or false to make sure that you cant take more than one
@@ -30,7 +29,6 @@ function screen2() {
 	button2_scn2.type = "Game";
 	button2_scn2.setSize(95,95);
 	button2_scn2.moveTo(437.25,166);
-	button2_scn2.node.style.zIndex = 0;
 
 	button2_scn2.onMouseDown(function(){
 		scoopOut = onClickButtons("Images/drinkTypeButtons/scoops/scoopLightEST.png", scoopOut);
@@ -40,7 +38,6 @@ function screen2() {
 	button3_scn2.type = "Game";
 	button3_scn2.setSize(95,95);
 	button3_scn2.moveTo(567.5,166);
-	button3_scn2.node.style.zIndex = 0;
 
 	button3_scn2.onMouseDown(function(){
 		scoopOut = onClickButtons("Images/drinkTypeButtons/scoops/scoopLighter.png", scoopOut);
@@ -50,7 +47,6 @@ function screen2() {
 	button4_scn2.type = "Game";
 	button4_scn2.setSize(95,95);
 	button4_scn2.moveTo(307,307.5);
-	button4_scn2.node.style.zIndex = 0;
 
 	button4_scn2.onMouseDown(function(){
 		scoopOut = onClickButtons("Images/drinkTypeButtons/scoops/scoopDarker.png", scoopOut);
@@ -60,7 +56,6 @@ function screen2() {
 	button5_scn2.type = "Game";
 	button5_scn2.setSize(95,95);
 	button5_scn2.moveTo(437.25,307.5);
-	button5_scn2.node.style.zIndex = 0;
 
 	button5_scn2.onMouseDown(function(){
 		scoopOut = onClickButtons("Images/drinkTypeButtons/scoops/scoopDarkEST.png", scoopOut);
@@ -71,7 +66,6 @@ function screen2() {
 	button6_scn2.type = "Game";
 	button6_scn2.setSize(95,95);
 	button6_scn2.moveTo(977,166);
-	button6_scn2.node.style.zIndex = 0;
 
 	button6_scn2.onMouseDown(function(){
 		scoopOut = onClickButtons("Images/drinkTypeButtons/scoops/scoopChamo.png", scoopOut);
@@ -81,7 +75,6 @@ function screen2() {
 	button7_scn2.type = "Game";
 	button7_scn2.setSize(95,95);
 	button7_scn2.moveTo(1107.25,166);
-	button7_scn2.node.style.zIndex = 0;
 
 	button7_scn2.onMouseDown(function(){
 		scoopOut = onClickButtons("Images/drinkTypeButtons/scoops/scoopGreen.png", scoopOut);
@@ -91,7 +84,6 @@ function screen2() {
 	button8_scn2.type = "Game";
 	button8_scn2.setSize(95,95);
 	button8_scn2.moveTo(1237.5,166);
-	button8_scn2.node.style.zIndex = 0;
 
 	button8_scn2.onMouseDown(function(){
 		scoopOut = onClickButtons("Images/drinkTypeButtons/scoops/scoopElder.png", scoopOut);
@@ -101,7 +93,6 @@ function screen2() {
 	button9_scn2.type = "Game";
 	button9_scn2.setSize(95,95);
 	button9_scn2.moveTo(977,307.5);
-	button9_scn2.node.style.zIndex = 0;
 
 	button9_scn2.onMouseDown(function(){
 		scoopOut = onClickButtons("Images/drinkTypeButtons/scoops/scoopWhite.png", scoopOut);
@@ -111,31 +102,29 @@ function screen2() {
 	button10_scn2.type = "Game";
 	button10_scn2.setSize(95,95);
 	button10_scn2.moveTo(1107.25,307.5);
-	button10_scn2.node.style.zIndex = 0;
 
 	button10_scn2.onMouseDown(function(){
-		scoopOut = onClickButtons("Images/drinkTypeButtons/scoops/scoopLighter.png", scoopOut);
+		scoopOut = onClickButtons("Images/drinkTypeButtons/scoops/scoopChai.png", scoopOut);
 	});
 
 	button11_scn2 = new sjs.Image("Images/drinkTypeButtons/mint.png"); // share with white
 	button11_scn2.type = "Game";
 	button11_scn2.setSize(95,95);
 	button11_scn2.moveTo(1237.5,307.5);
-	button11_scn2.node.style.zIndex = 0;
 
 	button11_scn2.onMouseDown(function(){
 		scoopOut = onClickButtons("Images/drinkTypeButtons/scoops/scoopWhite.png", scoopOut);
 	});
 
 	sjs.onHit("Beans","moveBlock", function(x,y){ // on hit, go to 3rd screen
-		transition();
-		window.currentScreen = 3;
+		x.moveTo(5,1000);
+		transition(2);
 		setTimeout(function (){
 			screen3();
-			checksForSwitchingScreens("screen3");
+			checksForSwitchingScreens(currentScreen,3);
+			window.currentScreen = 3;
 			x.node.style.zIndex= 2;
-			x.moveTo(5,1000);
-		}, 100);
+		}, 250);
 	});
 
 }

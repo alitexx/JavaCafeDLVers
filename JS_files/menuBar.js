@@ -3,6 +3,8 @@
 
 // add a global called "usable" that checks if the player can use the button right now
 // usable will only change in specific situations, like when they want to submit their menu
+var garbage_btn;
+var canChangeScreens = true; // makes sure nothing else is happening so no glitches
 
 function menuBar() {
 	var bgBar = new sjs.Image("Images/MenuBar.png");
@@ -11,12 +13,12 @@ function menuBar() {
 	bgBar.node.style.zIndex = 5;
 	var screen1btn = new sjs.Button("Order", function goToScreen1(){
 		btn_clickSFX.play();
-		if (currentScreen != 1){
+		if (currentScreen != 1 && canChangeScreens == true){
 		transition(currentScreen); // deletion goes on in here now
 		setTimeout(function (){
-			checksForSwitchingScreens(currentScreen,1);
 			screen1();
-		}, 200);
+			checksForSwitchingScreens(currentScreen,1);
+		}, 250);
 		}
 		});
 	screen1btn.node.style.zIndex = 6;
@@ -32,12 +34,12 @@ function menuBar() {
 
 	var screen2btn = new sjs.Button("Prep", function goToScreen2(){
 		btn_clickSFX.play();
-		if (currentScreen != 2){
+		if (currentScreen != 2 && canChangeScreens == true){
 		transition(currentScreen);
 		setTimeout(function (){
-			checksForSwitchingScreens(currentScreen,2);
 			screen2();
-		}, 200);
+			checksForSwitchingScreens(currentScreen,2);
+		}, 250);
 		}
 		});
 	screen2btn.node.style.zIndex = 6;
@@ -52,12 +54,12 @@ function menuBar() {
 
 	var screen3btn = new sjs.Button("Brew", function goToScreen3(){
 		btn_clickSFX.play();
-		if (currentScreen != 3){
+		if (currentScreen != 3 && canChangeScreens == true){
 		transition(currentScreen);
 		setTimeout(function (){
-			checksForSwitchingScreens(currentScreen,3);
 			screen3();
-		}, 200);
+			checksForSwitchingScreens(currentScreen,3);
+		}, 250);
 		}
 		});
 	screen3btn.node.style.zIndex = 6;
@@ -73,13 +75,13 @@ function menuBar() {
 
 	var screen4btn = new sjs.Button("Extras", function goToScreen4(){
 		btn_clickSFX.play();
-		if (currentScreen != 4){
+		if (currentScreen != 4 && canChangeScreens == true){
 		transition(currentScreen);
 		currentScreen = 4;
 		setTimeout(function (){
-			checksForSwitchingScreens(currentScreen,4);
 			screen4();
-		}, 200);
+			checksForSwitchingScreens(currentScreen,4);
+		}, 250);
 		}
 		});
 	screen4btn.node.style.zIndex = 6;
@@ -101,6 +103,13 @@ function menuBar() {
 	THEN, there's a note at the bottom that says "click here to submit" but
 	ONLY on the toppings screen. then you submit it and everyone is happy :)
 	*/
+	garbage_btn = new sjs.Image("Images/garbage.png");
+	garbage_btn.moveTo(1475,18);
+	garbage_btn.node.style.zIndex = 6;
+	garbage_btn.onMouseDown(function(){
+		// a function that lets you click on the item to delete
+		deleteItem();
+	});
 }
 
 
@@ -108,6 +117,33 @@ function spawnOrderForm(name){
 	switch(name){
 	case "Images/customerData/customer1.png":
 		spawningInMenu("Images/customerData/spamton_Menu.png");
+	break;
+	case "Images/customerData/Customer2.png":
+		spawningInMenu("Images/customerData/UG_Menu.png");
+	break;
+	case "Images/customerData/customer3.png":
+		spawningInMenu("Images/customerData/leo_Menu.png");
+	break;
+	case "Images/customerData/Customer4.png":
+		spawningInMenu("Images/customerData/robin_Menu.png");
+	break;
+	case "Images/customerData/Customer5.png":
+		spawningInMenu("Images/customerData/luigi_Menu.png");
+	break;
+	case "Images/customerData/Customer6.png":
+		spawningInMenu("Images/customerData/SG_Menu.png");
+	break;
+	case "Images/customerData/Customer7.png":
+		spawningInMenu("Images/customerData/glamrock_Menu.png");
+	break;
+	case "Images/customerData/Customer8.png":
+		spawningInMenu("Images/customerData/gingerbrave_Menu.png");
+	break;
+	case "Images/customerData/Customer9.png":
+		spawningInMenu("Images/customerData/greg_Menu.png");
+	break;
+	case "Images/customerData/Customer10.png":
+		spawningInMenu("Images/customerData/autumn_Menu.png");
 	break;
 	}
 }
@@ -122,24 +158,29 @@ function spawningInMenu(customerOrderForm){
 			window["menu"+counter.toString()] = new sjs.Image(customerOrderForm);
 			window["menu"+counter.toString()].draggable();
 			window["menu"+counter.toString()].type = "menu";
-			window["menu"+counter.toString()].node.style.zIndex = 100;
+			window["menu"+counter.toString()].node.style.zIndex = 50;
 			window["menu"+counter.toString()].noBounds = true;
 			window["menu"+counter.toString()].setSize(276.5,450.5);
 			switch(counter){
 				case 1:
 					menu1.moveTo(25,950);
+					menu1.menuPos = [25,950];
 				break;
 				case 2:
 					menu2.moveTo(326.5,950);
+					menu2.menuPos = [326.5,950];
 				break;
 				case 3:
 					menu3.moveTo(628,950);
+					menu3.menuPos = [628,950];
 				break;
 				case 4:
 					menu4.moveTo(929.5,950);
+					menu4.menuPos = [929.5,950];
 				break;
 				case 5:
 					menu5.moveTo(1231,950);
+					menu5.menuPos = [1231,950];
 				break;
 			}// end switch
 			menu_num = counter;
@@ -148,7 +189,25 @@ function spawningInMenu(customerOrderForm){
 	}// end while
 
 	window["menu"+menu_num.toString()].node.addEventListener('mouseup', function(){
-		window["menu"+menu_num.toString()].moveTo(25,950);
+		if (able2BTopped == true){ // this is only false when the menu is moved so im using it here too
+		switch(menu_num){
+			case 1:
+				menu1.moveTo(25,950);
+			break;
+			case 2:
+				menu2.moveTo(326.5,950);
+			break;
+			case 3:
+				menu3.moveTo(628,950);
+			break;
+			case 4:
+				menu4.moveTo(929.5,950);
+			break;
+			case 5:
+				menu5.moveTo(1231,950);
+			break;
+		}
+		}
 	});
 }// end funct
 
@@ -175,13 +234,18 @@ function checksForSwitchingScreens(leaving, entering){ // EVERYTHING that must b
 		break;
 
 		case 3:
-			if (typeof insertedScoop != "undefined"){insertedScoop.node.style.zIndex = -1;}
+			if (typeof insertedScoop1 != "undefined"){insertedScoop1.node.style.zIndex = -1;}
+			if (typeof insertedScoop2 != "undefined"){insertedScoop2.node.style.zIndex = -1;}
+			if (typeof insertedScoop3 != "undefined"){insertedScoop3.node.style.zIndex = -1;}
 			if (typeof moveable_Lcup1 != "undefined"){moveable_Lcup1.node.style.zIndex = -1;}
 			if (typeof moveable_Lcup2 != "undefined"){moveable_Lcup2.node.style.zIndex = -1;}
 			if (typeof moveable_Lcup3 != "undefined"){moveable_Lcup3.node.style.zIndex = -1;}
 			if (typeof moveable_Scup1 != "undefined"){moveable_Scup1.node.style.zIndex = -1;}
 			if (typeof moveable_Scup2 != "undefined"){moveable_Scup2.node.style.zIndex = -1;}
 			if (typeof moveable_Scup3 != "undefined"){moveable_Scup3.node.style.zIndex = -1;}
+			if (typeof drip1 != "undefined"){drip1.node.style.zIndex = -1;}
+			if (typeof drip2 != "undefined"){drip2.node.style.zIndex = -1;}
+			if (typeof drip3 != "undefined"){drip3.node.style.zIndex = -1;}
 
 		break;
 
@@ -199,13 +263,15 @@ function checksForSwitchingScreens(leaving, entering){ // EVERYTHING that must b
 
 	switch(entering) { // spawn in items needed
 		case 1: // incorporate screen 1 better
-			currentScreen = 1;
+			window.currentScreen = 1;
 			if (window.customerWaiting == true){
 				try{
-				clickToTakeOrder.node.style.zIndex = 1;
-				awaitingOrderCustomer.node.style.zIndex = 1;
+					clickToTakeOrder.node.style.zIndex = 10;
+					console.log(awaitingOrderCustomer);
+					awaitingOrderCustomer.node.style.zIndex = 10;
 				}
 				catch{
+					console.log("the catch has happened");
 					spawningInACustomer(true);
 				}
 			}
@@ -216,16 +282,18 @@ function checksForSwitchingScreens(leaving, entering){ // EVERYTHING that must b
 		break;
 		case 3:
 		currentScreen = 3;
-			if (typeof insertedScoop != "undefined"){insertedScoop.node.style.zIndex = 1;}
-			if (typeof moveable_Lcup1 != "undefined" && moveable_Lcup1.type != "onScreen4"){moveable_Lcup1.node.style.zIndex = 1;}
-			if (typeof moveable_Lcup2 != "undefined" && moveable_Lcup2.type != "onScreen4"){moveable_Lcup2.node.style.zIndex = 1;}
-			if (typeof moveable_Lcup3 != "undefined" && moveable_Lcup3.type != "onScreen4"){moveable_Lcup3.node.style.zIndex = 1;}
-			if (typeof moveable_Scup1 != "undefined" && moveable_Scup1.type != "onScreen4"){moveable_Scup1.node.style.zIndex = 1;}
-			if (typeof moveable_Scup2 != "undefined" && moveable_Scup2.type != "onScreen4"){moveable_Scup2.node.style.zIndex = 1;}
-			if (typeof moveable_Scup3 != "undefined" && moveable_Scup3.type != "onScreen4"){moveable_Scup3.node.style.zIndex = 1;}
-			if (typeof timerComplete1 != "undefined"){timer1.setImage("Images/brewTimer/timer8.png");}
-			if (typeof timerComplete2 != "undefined"){timer2.setImage("Images/brewTimer/timer8.png");}
-			if (typeof timerComplete3 != "undefined"){timer3.setImage("Images/brewTimer/timer8.png");}
+			if (typeof drip1 != "undefined"){drip1.node.style.zIndex = 1;}
+			if (typeof drip2 != "undefined"){drip2.node.style.zIndex = 1;}
+			if (typeof drip3 != "undefined"){drip3.node.style.zIndex = 1;}
+			if (typeof insertedScoop1 != "undefined"){insertedScoop1.node.style.zIndex = 2;}
+			if (typeof insertedScoop2 != "undefined"){insertedScoop2.node.style.zIndex = 2;}
+			if (typeof insertedScoop3 != "undefined"){insertedScoop3.node.style.zIndex = 2;}
+			if (typeof moveable_Lcup1 != "undefined" && moveable_Lcup1.type != "onScreen4"){moveable_Lcup1.node.style.zIndex = 2;}
+			if (typeof moveable_Lcup2 != "undefined" && moveable_Lcup2.type != "onScreen4"){moveable_Lcup2.node.style.zIndex = 2;}
+			if (typeof moveable_Lcup3 != "undefined" && moveable_Lcup3.type != "onScreen4"){moveable_Lcup3.node.style.zIndex = 2;}
+			if (typeof moveable_Scup1 != "undefined" && moveable_Scup1.type != "onScreen4"){moveable_Scup1.node.style.zIndex = 2;}
+			if (typeof moveable_Scup2 != "undefined" && moveable_Scup2.type != "onScreen4"){moveable_Scup2.node.style.zIndex = 2;}
+			if (typeof moveable_Scup3 != "undefined" && moveable_Scup3.type != "onScreen4"){moveable_Scup3.node.style.zIndex = 2;}
 		break;
 		case 4:
 		currentScreen = 4;
@@ -239,4 +307,19 @@ function checksForSwitchingScreens(leaving, entering){ // EVERYTHING that must b
 	}	
 }
 
-			
+
+function deleteItem(){
+	var deletebbl = new sjs.Image("Images/prompt2user.png");
+	deletebbl.moveTo(700,120);
+	deletebbl.node.style.zIndex = 20;
+	var prmpt_Text = new sjs.Text("Click an item to throw it away, click the garbage to cancel.",75,"white");
+	prmpt_Text.moveTo(730,185);
+	prmpt_Text.node.style.zIndex = 20;
+	prmpt_Text.node.style.fontFamily = "Apple Kid";
+	garbage_btn.onMouseDown(function(){ // this is gonna be tricky
+		deletebbl.destroy();
+		prmpt_Text.destroy();
+		return;
+	});
+
+}

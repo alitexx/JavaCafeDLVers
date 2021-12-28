@@ -12,6 +12,10 @@ var scoop1Taken = ""; // these become the name of da scoop
 var scoop2Taken = "";
 var scoop3Taken = "";
 
+var drip1;
+var drip2;
+var drip3;
+
 var moveable_Lcup1; // making them global just in case more spawn
 var moveable_Lcup2;
 var moveable_Lcup3;
@@ -19,15 +23,18 @@ var moveable_Scup1;
 var moveable_Scup2;
 var moveable_Scup3;
 
-var timerComplete1;
-var timerComplete2;
-var timerComplete3;
+var timerComplete1 = false;
+var timerComplete2 = false;
+var timerComplete3 = false;
 
 var timer1;
 var timer2;
 var timer3;
 
-var insertedScoop;
+var insertedScoop1;
+var insertedScoop2;
+var insertedScoop3;
+
 var moveable_frother;
 
 var beingBrewedSFX = new Audio("Audio/beingBrewedSFX.wav");
@@ -46,12 +53,21 @@ function screen3() {
 
 	timer1 = new sjs.Image("Images/brewTimer/timer_null.png");
 	timer1.moveTo(200,190);
+	if (timerComplete1 == true){
+		timer1.setImage("Images/brewTimer/timer8.png");
+	}
 
 	timer2 = new sjs.Image("Images/brewTimer/timer_null.png");
 	timer2.moveTo(550,190);
+	if (timerComplete2 == true){
+		timer2.setImage("Images/brewTimer/timer8.png");
+	}
 
 	timer3 = new sjs.Image("Images/brewTimer/timer_null.png");
 	timer3.moveTo(880,190);
+	if (timerComplete3 == true){
+		timer3.setImage("Images/brewTimer/timer8.png");
+	}
 
 	scoopInterract1 = new sjs.Image("Images/moveDrinkParts/screen3CoffeeBar.png");
 	scoopInterract1.moveTo(180,355);
@@ -68,17 +84,14 @@ function screen3() {
 	station1 = new sjs.Image("Images/circle.png");
 	station1.type = "brewStation"
 	station1.moveTo(175,800);
-	station1.node.style.zIndex = 0;
 
 	station2 = new sjs.Image("Images/circle.png");
 	station2.type = "brewStation"
 	station2.moveTo(525,800);
-	station2.node.style.zIndex = 0;
 
 	station3 = new sjs.Image("Images/circle.png");
 	station3.type = "brewStation"
 	station3.moveTo(855,800);
-	station3.node.style.zIndex = 0;
 
 
 	frother = new sjs.Image("Images/Frother.png");
@@ -110,7 +123,6 @@ function screen3() {
 	constant_Lcup.type = "Game";
 	constant_Lcup.setSize(200,300); // pls adjust sizing
 	constant_Lcup.moveTo(1400,150);
-	constant_Lcup.node.style.zIndex = 0;
 
 	constant_Lcup.onMouseDown(function(){ // when clicked
 		checkForDrinkSpot("LARGE");
@@ -120,7 +132,6 @@ function screen3() {
 	constant_Scup.type = "Game";
 	constant_Scup.setSize(200,300);
 	constant_Scup.moveTo(1200,150);
-	constant_Scup.node.style.zIndex = 0;
 
 	constant_Scup.onMouseDown(function(){ // when clicked
 		checkForDrinkSpot("SMALL");
@@ -159,6 +170,7 @@ PASS THAT NAME INTO THE CLASS
 
 	sjs.onHit("doneBrewing", "moveBlock", function(x,y){
 		if (typeof drinkOnScn4 == "undefined"){
+		console.log("I am moving to screen 4!")
 		x.moveTo(645,470); // set move to in the middle
 		x.undraggable();
 		x.unfollow();
@@ -170,9 +182,19 @@ PASS THAT NAME INTO THE CLASS
 			drinkOnScn4 = x;
 			x.node.style.zIndex= 2;
 			x.type = "onScreen4";
-		}, 100);
+		}, 250);
 		} else {
-			// do something at some point
+			var slowDown = new sjs.Image("Images/prompt2user.png");
+			slowDown.moveTo(700,120);
+			slowDown.node.style.zIndex = 20;
+			var prmpt_Text = new sjs.Text("You can only put toppings on drinks one a time!",75,"white");
+			prmpt_Text.moveTo(730,185);
+			prmpt_Text.node.style.zIndex = 20;
+			prmpt_Text.node.style.fontFamily = "Apple Kid";
+			setTimeout(function(){
+				slowDown.destroy();
+				prmpt_Text.destroy();
+		}, 1500);
 		}
 	});
 
@@ -230,10 +252,10 @@ PASS THAT NAME INTO THE CLASS
 				insertScoopGIF.moveTo(-136,306);
 				insertScoopGIF.node.style.zIndex = 2;
 				setTimeout(function(){
-					insertedScoop = new sjs.Image("Images/drinkTypeButtons/scoops/insertedScoop.png");
-					insertedScoop.node.style.zIndex = 2;
-					insertedScoop.noBounds = true;
-					insertedScoop.moveTo(-136,306);
+					insertedScoop1 = new sjs.Image("Images/drinkTypeButtons/scoops/insertedScoop.png");
+					insertedScoop1.node.style.zIndex = 2;
+					insertedScoop1.noBounds = true;
+					insertedScoop1.moveTo(-136,306);
 					insertScoopGIF.destroy();
 					checkForDrinkMaking(scoop1Taken, station1Taken, "1");
 				}, 450);
@@ -249,9 +271,9 @@ PASS THAT NAME INTO THE CLASS
 				insertScoopGIF.moveTo(212,306);
 				insertScoopGIF.node.style.zIndex = 2;
 				setTimeout(function(){
-					insertedScoop = new sjs.Image("Images/drinkTypeButtons/scoops/insertedScoop.png");
-					insertedScoop.node.style.zIndex = 2;
-					insertedScoop.moveTo(212,306);
+					insertedScoop2 = new sjs.Image("Images/drinkTypeButtons/scoops/insertedScoop.png");
+					insertedScoop2.node.style.zIndex = 2;
+					insertedScoop2.moveTo(212,306);
 					insertScoopGIF.destroy();
 					checkForDrinkMaking(scoop2Taken, station2Taken, "2");
 				}, 450);
@@ -267,9 +289,9 @@ PASS THAT NAME INTO THE CLASS
 				insertScoopGIF.moveTo(545,306);
 				insertScoopGIF.node.style.zIndex = 2;
 				setTimeout(function(){
-					insertedScoop = new sjs.Image("Images/drinkTypeButtons/scoops/insertedScoop.png");
-					insertedScoop.node.style.zIndex = 2;
-					insertedScoop.moveTo(545,306);
+					insertedScoop3 = new sjs.Image("Images/drinkTypeButtons/scoops/insertedScoop.png");
+					insertedScoop3.node.style.zIndex = 2;
+					insertedScoop3.moveTo(545,306);
 					insertScoopGIF.destroy();
 					checkForDrinkMaking(scoop3Taken, station3Taken, "3");
 				}, 450);
@@ -313,41 +335,20 @@ function checkForDrinkSpot(drinkType){ // change
 function checkForDrinkMaking(scoopSlot, drinkSlot, area){ // first arg, name of IMAGE FOR scoop. second arg, cup used
 	if (scoopSlot != "" && drinkSlot != false){
 		beingBrewedSFX.play();
-		var drip = determineLiquidColor(scoopSlot);
-		drip.node.style.zIndex = 0;
+		window["drip"+area.toString()] = determineLiquidColor(scoopSlot); // change drip according to slot 
+		window["drip"+area.toString()].node.style.zIndex = 0.01;
 		if (area == "1"){ // changes location according to where it is sent from
-			drip.moveTo(220,475);
-			brewingTimer(area, scoopSlot, drip, drinkSlot); // go to brewing timer to see how long this baby's been cookin
-			
-			var indexDrinksBeingMade; // index for list
-			
-			for (const [key, value] of Object.entries(drinksBeingMade)) {
-				if (value == null){
-					indexDrinksBeingMade = key;
-					break;
-				} }
-
-			console.log(indexDrinksBeingMade);
-			switch(area){
-				case "1":
-				drinksBeingMade[indexDrinksBeingMade] = new Drink(1, station1Taken, scoopSlot);
-				break;
-				case "2":
-				drinksBeingMade[indexDrinksBeingMade] = new Drink(1, station2Taken, scoopSlot);
-				break;
-				case "3":
-				drinksBeingMade[indexDrinksBeingMade] = new Drink(1, station3Taken, scoopSlot);
-				break;
-			}
-
-			console.log("i did it!! yahoo!!!!");
-
+			drip1.moveTo(220,475);
+			brewingTimer(area, scoopSlot, drip1, drinkSlot); // go to brewing timer to see how long this baby's been cookin
+			drinksBeingMade[drinkSlot.numInLine] = new Drink(1, station1Taken, scoopSlot); // CLASS CREATION
 		} if (area == "2"){
-			drip.moveTo(570,475);
-			brewingTimer(area, scoopSlot, drip);
+			drip2.moveTo(570,475);
+			brewingTimer(area, scoopSlot, drip2, drinkSlot);
+			drinksBeingMade[drinkSlot.numInLine] = new Drink(1, station2Taken, scoopSlot); // CLASS CREATION
 		} if (area == "3"){
-			drip.moveTo(900,475);
-			brewingTimer(area, scoopSlot, drip);
+			drip3.moveTo(900,475);
+			brewingTimer(area, scoopSlot, drip3, drinkSlot);
+			drinksBeingMade[drinkSlot.numInLine] = new Drink(1, station3Taken, scoopSlot); // CLASS CREATION
 		}
 	} // end if
 }
@@ -360,72 +361,34 @@ function checkForDrinkMaking(scoopSlot, drinkSlot, area){ // first arg, name of 
 function brewingTimer(area, typeOfDrink, drip, drinkSlot){
 	switch(area){
 		case "1":
-			switchForTimer(200, 190, drip);
+			switchForTimer(200, 190, drip, 1);
 			setTimeout(function(){
 				if (timerComplete1 == true){ // TADA!!!!!!!!!!!!!!!!!!!!!!!!!!! DRINK IS DONE
-					// maybe a nice little "ding!" to show that the drink is completed
-					/*var onClickDrink;
-					onClickDrink = drinkSlot.onMouseDown(function(){
-			    	// switch based on slotnum
-			    	console.log("drink has been clicked");
-  			        drinkSlot.canBrew = false;
-  		        	drinkSlot.draggable();
-  		        	drinkSlot.type = "doneBrewing";
-    		        timer1.setImage("Images/brewTimer/timer_null.png");
-	            	insertedScoop.destroy();
-    	    	    station1Taken = false;
-        	    	delete scoop1Taken;
-       	    		timerComplete1 = false;
-        	    	console.log(drinkSlot);
-           			delete onClickDrink;
-          });*/
-			var index = drinkSlot.numInLine
-			console.log(typeof drinksBeingMade[index])
-					drinksBeingMade[index].onClickEventS3(drinkSlot);
+					var index = drinkSlot.numInLine
+					console.log(typeof drinksBeingMade[index])
+					drinksBeingMade[index].onClickEventS3(drinkSlot, "1");
 					}
 				}, 8600);
 			break;
 	 	case "2":
-			switchForTimer(550, 190, drip);
-			if (timerComplete2 == true){
-				setTimeout(function(){
-				if (timerComplete1 == true){ // TADA!!!!!!!!!!!!!!!!!!!!!!!!!!! DRINK IS DONE
-					eval(drinkSlot).canBrew = false;
-					eval(drinkSlot).draggable();
-					eval(drinkSlot).type = "doneBrewing";
-					eval(drinkSlot).onMouseDown(function(){ // make something so it only fires ONCE
-						station2Taken.destroy();
-						scoop2Taken.destroy();
-						timer2.setImage("Images/brewTimer/timer_null.png");
-						insertedScoop.destroy();
-					});
-					
-					// add an on moue down but SERIOUSLY make sure it only fires once
-					// WHEN user moves the drink, reset the timer and delete the scoopa. reset all variables so another drink can be made in that spot
+			switchForTimer(550, 190, drip, 2);
+			setTimeout(function(){
+				if (timerComplete2 == true){
+					var index = drinkSlot.numInLine
+					console.log(typeof drinksBeingMade[index])
+					drinksBeingMade[index].onClickEventS3(drinkSlot, "2");
 					}
-				}, 10000);
-			}
+				}, 8600);
 			break;
 		case "3":
-			switchForTimer(880, 190, drip);
-			if (timerComplete3 == true){
-				setTimeout(function(){
-				if (timerComplete1 == true){ // TADA!!!!!!!!!!!!!!!!!!!!!!!!!!! DRINK IS DONE
-					eval(drinkSlot).canBrew = false;
-					eval(drinkSlot).draggable();
-					eval(drinkSlot).type = "doneBrewing";
-					eval(drinkSlot).onMouseDown(function(){ // make something so it only fires ONCE
-						station3Taken.destroy();
-						scoop3Taken.destroy();
-						timer3.setImage("Images/brewTimer/timer_null.png");
-						insertedScoop.destroy();
-					});
-					
-					// add an on moue down but SERIOUSLY make sure it only fires once
-					// WHEN user moves the drink, reset the timer and delete the scoopa. reset all variables so another drink can be made in that spot
+			switchForTimer(880, 190, drip, 3);
+			setTimeout(function(){
+				if (timerComplete3 == true){ // TADA!!!!!!!!!!!!!!!!!!!!!!!!!!! DRINK IS DONE
+					var index = drinkSlot.numInLine
+					console.log(typeof drinksBeingMade[index])
+					drinksBeingMade[index].onClickEventS3(drinkSlot, "3");
 					}
-				}, 10000);
-			}
+				}, 8600);
 			break;
 		
 
@@ -437,44 +400,41 @@ function brewingTimer(area, typeOfDrink, drip, drinkSlot){
 
 
 
-function switchForTimer(x, y, drip){ // i tried a promise???
+function switchForTimer(x, y, drip, numOfTimer){ // REDO THE ENTIRITY OF THIS CODE!!!!
 	var runningTimer = 0;
-	timer = new sjs.Image("Images/clear.png");
-	timer.setSize(160,160)
-	timer.moveTo(x,y);
 	var timerBEGIN = setInterval(function(){ 
 		switch(runningTimer){
 			case 1 :
-				timer.setImage("Images/brewTimer/timer1.png");
-				if (currentScreen != 3){timer.node.style.zIndex = -1}
+				window["timer"+numOfTimer.toString()].setImage("Images/brewTimer/timer1.png");
+				if (currentScreen != 3){window["timer"+numOfTimer.toString()].node.style.zIndex = -1}
 				break;
 			case 2 :
-				timer.setImage("Images/brewTimer/timer2.png");
-				if (currentScreen != 3){timer.node.style.zIndex = -1}
+				window["timer"+numOfTimer.toString()].setImage("Images/brewTimer/timer2.png");
+				if (currentScreen != 3){window["timer"+numOfTimer.toString()].node.style.zIndex = -1}
 				break;
 			case 3 :
-				timer.setImage("Images/brewTimer/timer3.png");
-				if (currentScreen != 3){timer.node.style.zIndex = -1}
+				window["timer"+numOfTimer.toString()].setImage("Images/brewTimer/timer3.png");
+				if (currentScreen != 3){window["timer"+numOfTimer.toString()].node.style.zIndex = -1}
 				break;
 			case 4 :
-				timer.setImage("Images/brewTimer/timer4.png");
-				if (currentScreen != 3){timer.node.style.zIndex = -1}
+				window["timer"+numOfTimer.toString()].setImage("Images/brewTimer/timer4.png");
+				if (currentScreen != 3){window["timer"+numOfTimer.toString()].node.style.zIndex = -1}
 				break;
 			case 5 :
-				timer.setImage("Images/brewTimer/timer5.png");
-				if (currentScreen != 3){timer.node.style.zIndex = -1}
+				window["timer"+numOfTimer.toString()].setImage("Images/brewTimer/timer5.png");
+				if (currentScreen != 3){window["timer"+numOfTimer.toString()].node.style.zIndex = -1}
 				break;
 			case 6 :
-				timer.setImage("Images/brewTimer/timer6.png");
-				if (currentScreen != 3){timer.node.style.zIndex = -1}
+				window["timer"+numOfTimer.toString()].setImage("Images/brewTimer/timer6.png");
+				if (currentScreen != 3){window["timer"+numOfTimer.toString()].node.style.zIndex = -1}
 				break;
 			case 7 :
-				timer.setImage("Images/brewTimer/timer7.png");
-				if (currentScreen != 3){timer.node.style.zIndex = -1}
+				window["timer"+numOfTimer.toString()].setImage("Images/brewTimer/timer7.png");
+				if (currentScreen != 3){window["timer"+numOfTimer.toString()].node.style.zIndex = -1}
 				break;
 			case 8 : // ding ding ding!!! drink is done
-				timer.setImage("Images/brewTimer/timer8.png");
-				if (currentScreen != 3){timer.node.style.zIndex = -1}
+				window["timer"+numOfTimer.toString()].setImage("Images/brewTimer/timer8.png");
+				if (currentScreen != 3){window["timer"+numOfTimer.toString()].node.style.zIndex = -1}
 				break;
 			}
 			runningTimer = runningTimer + 0.5;
@@ -496,7 +456,6 @@ function switchForTimer(x, y, drip){ // i tried a promise???
 			}
 	}, 500);
 }
-
 
 
 
@@ -610,6 +569,7 @@ function determineLiquidColor(beansBrewed){ // determines what image should be d
 			return new sjs.Image("Images/drinkTypeButtons/drip/coffeeDripBattery.png");
 		break;
 		case "Images/drinkTypeButtons/scoops/scoopLightEST.png":
+		case "Images/drinkTypeButtons/scoops/scoopChai.png":
 		case "Images/drinkTypeButtons/scoops/scoopLighter.png":
 			return new sjs.Image("Images/drinkTypeButtons/drip/coffeeDripLight.png");
 		break;

@@ -6,9 +6,9 @@ var isSugarOut = false;
 var isCinOut = false;
 var isPepperOut = false;
 
-var drinkOnScn4;
+var drinkOnScn4; // maybe change this to a clear image
+var able2BTopped = true; // the true/false that checks if you can actively put toppings on a drink
 
-// maybe an "are you sure?" and pull up the menu so you can be quadruple sure.
 
 function screen4() {
 
@@ -25,16 +25,19 @@ function screen4() {
 	turnInMenu.node.style.zIndex = 0;
 
 	sjs.onHit("menu", "turnInMenu", function(x,y){
-		var saveX = x.x; // how would i find it's initial placing?
-		var saveY = x.y;
-		// so i can move it back
-		x.setSize(466,758);
+		canChangeScreens = false;
+		able2BTopped = false;
+
+		x.setSize(466,758); // move image
 		x.moveTo(220,200);
 		x.undraggable();
 		x.unfollow();
-		drinkOnScn4.moveTo(1000,500);
+		try{drinkOnScn4.moveTo(1000,500);}
+		catch{console.log("You don't have a drink!")}
 
-		// add a try that tries to move the cup, catch is continue or smth
+		item_whipped.undraggable();
+		item_cara.undraggable();
+		item_choco.undraggable();
 
 		// are you sure?
 
@@ -52,8 +55,15 @@ function screen4() {
 		NO.node.style.zIndex = 10;
 
 		NO.onMouseDown(function(){
+			able2BTopped = true;
+			canChangeScreens = true;
+
+			item_whipped.draggable();
+			item_cara.draggable();
+			item_choco.draggable();
+
 			menuImage.setSize(276.5,450.5);
-			menuImage.moveTo(saveX,saveY); // add something to move it back to original placing
+			menuImage.moveTo(menuImage.menuPos[0],menuImage.menuPos[1]); // add something to move it back to original placing
 			NO.destroy();
 			YES.destroy();
 			areYouSure.destroy();
@@ -67,9 +77,14 @@ function screen4() {
 		YES.node.style.zIndex = 10;
 
 		YES.onMouseDown(function(){
+			//																getSoundAndFadeAudio(overworldBGM); // TESTING THIS
+			overworldBGM.pause();
+			audioS5.play();
 			menuImage.setSize(276.5,450.5);
 			menuImage.destroy();
 			x.destroy();
+			x = undefined;
+			delete(x);
 			YES.destroy();
 			NO.destroy();
 			areYouSure.destroy();
@@ -79,13 +94,26 @@ function screen4() {
 
 			// passes menu image into class (each image is different) so i know what to grade
 			try {
-				drinksBeingMade[drinkOnScn4.numInLine].customerRating(menuImage.src);
+				customerGRADING = drinksBeingMade[drinkOnScn4.numInLine].customerRating(menuImage.src);
+				if (GcustomerRating1 == undefined){GcustomerRating1 = customerGRADING
+				} else if (GcustomerRating2 == undefined) {GcustomerRating2 = customerGRADING
+				} else if (GcustomerRating3 == undefined){GcustomerRating3 = customerGRADING}
 				transition(4);
+
+				drinksBeingMade[drinkOnScn4.numInLine] = undefined;
+				delete(drinksBeingMade[drinkOnScn4.numInLine]); // fully delete the class
+
+				drinkOnScn4.destroy();
+				drinkOnScn4 = undefined;
+				delete(drinkOnScn4);
+
+				cupsCurrentlyUsed = cupsCurrentlyUsed - 1;
 				setTimeout(function (){
 					checksForSwitchingScreens(currentScreen,5);
 					currentScreen = 5;
 					screen5(menuImage.src);
-				}, 200);
+					canChangeScreens = true;
+				}, 250);
 			}
 			catch{
 				var makeSomething = new sjs.Image("Images/prompt2user.png");
@@ -227,7 +255,7 @@ function screen4() {
 }
 
 function createDRIP(shotAdded, imageforDRIP, drinkOnScn4){
-		if (typeof drinkOnScn4 != "undefined"){ // checks if there actually a cup here
+		if (typeof drinkOnScn4 != "undefined" && able2BTopped == true){ // checks if there actually a cup here
 			drinksBeingMade[drinkOnScn4.numInLine].addTopping(shotAdded);
 			var drip = new sjs.Image(imageforDRIP);
 			drip.moveTo(749,429.5);
@@ -242,7 +270,7 @@ function createDRIP(shotAdded, imageforDRIP, drinkOnScn4){
 }
 
 function createT_ITEM(itemClicked, imageforITEM, drinkOnScn4, checkIf1IsOut){
-		if (typeof drinkOnScn4 != "undefined" && checkIf1IsOut == false){ // checks if there actually a cup here
+		if (typeof drinkOnScn4 != "undefined" && checkIf1IsOut == false && able2BTopped == true){ // checks if there actually a cup here
 			checkIf1IsOut = true;
 			var single = new sjs.Image(imageforITEM);
 			single.moveTo(sjs.mouse.x,sjs.mouse.y);

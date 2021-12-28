@@ -6,6 +6,9 @@ var backgroundMMS;
 var MENUtxt;
 var campaignBtn;
 var customBtn;
+
+var overworldBGM;
+
 function mainModeSelect() {
 // audio
 
@@ -39,9 +42,9 @@ function mainModeSelect() {
 				menuBar();
 				// audio change
 				menuAudio.pause();
-				menuAudio = null;
+				menuAudio = undefined;
 			},250);
-			var overworldBGM = new Audio("Audio/4BGM.wav");
+			overworldBGM = new Audio("Audio/4BGM.wav");
 			overworldBGM.loop = true;
 			overworldBGM.play();
 			
