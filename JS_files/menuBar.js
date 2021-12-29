@@ -109,6 +109,7 @@ function menuBar() {
 	garbage_btn.moveTo(1475,18);
 	garbage_btn.node.style.zIndex = 6;
 	garbage_btn.onMouseDown(function(){
+		btn_clickSFX.play();
 		// a function that lets you click on the item to delete
 		if (deleteItem_Running == true){
 			deleteItem_Running = false;

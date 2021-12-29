@@ -16,7 +16,7 @@ var overworldBGM;
 function mainModeSelect() {
 // audio
 
-
+	btnClickMenu.pause();
 	var menuAudio = new Audio("Audio/3Alt_Menu.wav");
 	// maybe button sfx
 	if (musicCompleted == false) {
@@ -37,7 +37,11 @@ function mainModeSelect() {
 
 	
 		campaignBtn = new sjs.Button("Campaign", function(){
-			onBeginAudio = null;
+			btnClickMenu.play();
+			onBeginAudio = undefined;
+			delete(onBeginAudio);
+			TitleBGM = undefined;
+			delete(TitleBGM);
 			transition("mainMenu");
 			STARTspawningNPCS();
 			setTimeout(function(){
@@ -59,8 +63,12 @@ function mainModeSelect() {
 
 
 		customBtn = new sjs.Button("Endless", function(){ // add a counter in this mode to see how many people you've served
+			btnClickMenu.play();
 			endlessMode = true;
-			onBeginAudio = null;
+			onBeginAudio = undefined;
+			delete(onBeginAudio);
+			TitleBGM = undefined;
+			delete(TitleBGM);
 			transition("mainMenu");
 			STARTspawningNPCS();
 			setTimeout(function(){

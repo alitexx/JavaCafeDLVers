@@ -33,98 +33,132 @@ var beginTXT;
 var titleJavaCafe;
 var onBeginAudio = new Audio("Audio/2Enter.OGG");
 var TitleBGM = new Audio("Audio/1Title.mp3");
+var btnClickMenu = new Audio("Audio/scrollMenu.ogg");
 
 
 function start(){
-	sjs.open();
-	// play this, make this work at the end tho
+	TitleBGM.play();
+	TitleBGM.loop = true;
 
-gameWindow = sjs.open("target",1600,1000);
-document.body.style.backgroundColor = "black";
+	background = new sjs.Image("Images/mainMenu/BG.png");
+	background.node.style.zIndex = 0;
+	background.type = "mainMenu";
+	background.setSize(1600,500);
+	background.center();
 
+	clouds = new sjs.Image("Images/mainMenu/Clouds.gif");
+	clouds.node.style.zIndex = 0;
+	clouds.type = "mainMenu";
+	clouds.noBounds = true;
+	clouds.moveTo(-260,100);
 
-background = new sjs.Image("Images/mainMenu/BG.png");
-background.node.style.zIndex = 0;
-background.type = "mainMenu";
-background.setSize(1600,500);
-background.center();
+	cafeIcon = new sjs.Image("Images/mainMenu/Cafe.png");
+	cafeIcon.node.style.zIndex = 0;
+	cafeIcon.type = "mainMenu";
+	cafeIcon.moveTo(460,260);
 
-clouds = new sjs.Image("Images/mainMenu/Clouds.gif");
-clouds.node.style.zIndex = 0;
-clouds.type = "mainMenu";
-clouds.noBounds = true;
-clouds.moveTo(-260,100);
+	tree1 = new sjs.Image("Images/mainMenu/TreeAnim.gif");
+	tree1.node.style.zIndex = 0;
+	tree1.type = "mainMenu";
+	tree1.moveTo(-200,220);
+	tree1.noBounds = true;
 
-cafeIcon = new sjs.Image("Images/mainMenu/Cafe.png");
-cafeIcon.node.style.zIndex = 0;
-cafeIcon.type = "mainMenu";
-cafeIcon.moveTo(460,260);
+	tree2 = new sjs.Image("Images/mainMenu/TreeAnim.gif");
+	tree2.node.style.zIndex = 0;
+	tree2.type = "mainMenu";
+	tree2.moveTo(1300,220);
+	tree2.noBounds = true;
 
-tree1 = new sjs.Image("Images/mainMenu/TreeAnim.gif");
-tree1.node.style.zIndex = 0;
-tree1.type = "mainMenu";
-tree1.moveTo(-200,220);
-tree1.noBounds = true;
+	barrier1 = new sjs.Image("Images/mainMenu/DarkBorder.png");
+	barrier1.node.style.zIndex = 0;
+	barrier1.type = "mainMenu";
+	barrier1.moveTo(0,-1000);
 
-tree2 = new sjs.Image("Images/mainMenu/TreeAnim.gif");
-tree2.node.style.zIndex = 0;
-tree2.type = "mainMenu";
-tree2.moveTo(1300,220);
-tree2.noBounds = true;
+	barrier2 = new sjs.Image("Images/mainMenu/DarkBorder.png");
+	barrier2.node.style.zIndex = 0;
+	barrier2.type = "mainMenu";
+	barrier2.moveTo(0,1000);
 
-barrier1 = new sjs.Image("Images/mainMenu/DarkBorder.png");
-barrier1.node.style.zIndex = 0;
-barrier1.type = "mainMenu";
-barrier1.moveTo(0,-1000);
+	beginTXT = new sjs.Text("Press SPACE to begin",200,"grey");
+	beginTXT.node.style.zIndex = 0;
+	beginTXT.type = "mainMenu";
+	beginTXT.node.style.fontFamily = "International Font of Mystery";
+	beginTXT.center().bottom();
 
-barrier2 = new sjs.Image("Images/mainMenu/DarkBorder.png");
-barrier2.node.style.zIndex = 0;
-barrier2.type = "mainMenu";
-barrier2.moveTo(0,1000);
+	titleJavaCafe = new sjs.Image("Images/mainMenu/logo.gif");
+	titleJavaCafe.node.style.zIndex = 0;
+	titleJavaCafe.moveTo(390,-100);
+	titleJavaCafe.noBounds = true;
 
-beginTXT = new sjs.Text("Press SPACE to begin",200,"grey");
-beginTXT.node.style.zIndex = 0;
-beginTXT.type = "mainMenu";
-beginTXT.node.style.fontFamily = "International Font of Mystery";
-beginTXT.center().bottom();
+	var codehasrun = false; // so it doesnt trigger 5 million times
 
-titleJavaCafe = new sjs.Image("Images/mainMenu/logo.gif");
-titleJavaCafe.node.style.zIndex = 0;
-titleJavaCafe.moveTo(390,-100);
-titleJavaCafe.noBounds = true;
-
-var codehasrun = false; // so it doesnt trigger 5 million times
-
-sjs.keyDown(SPACE_KEY, function startgame(){ //WHEN SPACE IS PRESSED
-	if (codehasrun == false) {
-		codehasrun = true;
-		cafeIcon.destroy(); // destroy old cafe icon and replace with anim
-		var cafeAnim = new sjs.Image("Images/mainMenu/CafeAnim.gif");
-		cafeAnim.moveTo(460,260);
-		onBeginAudio.play();
-		setTimeout(function(){
-			TitleBGM = null;
-			cafeAnim.destroy();
-			var cafeEnter = new sjs.Image("Images/mainMenu/Cafe_Open.png");
-			cafeEnter.type = "mainMenu";
-			cafeEnter.moveTo(460,260);
-			transition("opening");
+	sjs.keyDown(SPACE_KEY, function startgame(){ //WHEN SPACE IS PRESSED
+		if (codehasrun == false) {
+			codehasrun = true;
+			cafeIcon.destroy(); // destroy old cafe icon and replace with anim
+			var cafeAnim = new sjs.Image("Images/mainMenu/CafeAnim.gif");
+			cafeAnim.moveTo(460,260);
+			onBeginAudio.play();
 			setTimeout(function(){
-				cafeEnter.destroy();
-				window.currentscreen = 0.5
-				mainModeSelect(); // go to modeSelect.js
-				//evalScreen();
-			}, 200);
-		},400);
-}
+				TitleBGM.pause();
+				TitleBGM = undefined;
+				cafeAnim.destroy();
+				var cafeEnter = new sjs.Image("Images/mainMenu/Cafe_Open.png");
+				cafeEnter.type = "mainMenu";
+				cafeEnter.moveTo(460,260);
+				transition("opening");
+				setTimeout(function(){
+					cafeEnter.destroy();
+					window.currentscreen = 0.5
+					mainModeSelect(); // go to modeSelect.js
+					//evalScreen();
+				}, 200);
+			},400);
+	}
 });
 
-
 } //end start
+
+
+
+
+function loadingScreen(){
+	sjs.open();
+
+	gameWindow = sjs.open("target",1600,1000);
+	document.body.style.backgroundColor = "black";
+
+	checkTutorial = new sjs.Text("Check below for a tutorial",200,"white");
+	checkTutorial.node.style.fontFamily = "International Font of Mystery";
+	checkTutorial.center();
+	startBtn = new sjs.Button("Start", function (){
+		btnClickMenu.play();
+		transition("loading");
+		var videoElement = document.getElementById('video_containter');
+		videoElement.remove();
+		setTimeout(function(){
+			start();
+		}, 250);
+	});
+
+	startBtn.node.style.fontFamily = "Apple Kid";
+	startBtn.node.style.width = '300px';
+	startBtn.node.style.height = '100px';
+	startBtn.node.style.background = 'YellowGreen'; // make it RED
+	startBtn.node.style.color = 'GreenYellow';
+	startBtn.node.style.fontSize = '75px';
+	startBtn.moveTo(650,750);
+}
+
 </script>
 </head>
-<body onload="start()">
+<body onload="loadingScreen()">
 <div id="target" style="margin:auto;background:black;"></div>
+<div align="center">
+	<video id="video_containter" class="video-js vjs-default-skin" controls preload="none" width="1148" height="716" poster="" data-setup="{}">
+		<source src="JavaCafe_Tutorial.mp4" type="video/mp4" />
+	</video>
+</div>
 </body>
 </html>
 
