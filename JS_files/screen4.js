@@ -1,12 +1,12 @@
 // click the menu to confirm sending of drink, can be done at any time. maybe put a button on it
 
-var background4;var moveToEndScreen;var turnInMenu;var item_whipped;var item_cara;var item_choco;var item_sugarcube;var item_peppermint;var item_cinnamon;var button1_scn4;var button2_scn4;var button3_scn4; var button4_scn4; var button5_scn4; var button6_scn4;
+var background4;var moveToEndScreen;var turnInMenu;var item_whipped;var item_cara;var item_choco;var item_sugarcube;var item_peppermint;var item_cinnamon;var button1_scn4;var button2_scn4;var button3_scn4; var button4_scn4; var button5_scn4; var button6_scn4; var infoBlock;
 
 var isSugarOut = false;
 var isCinOut = false;
 var isPepperOut = false;
 
-var drinkOnScn4; // maybe change this to a clear image
+var drinkOnScn4;
 var able2BTopped = true; // the true/false that checks if you can actively put toppings on a drink
 
 
@@ -45,6 +45,23 @@ function screen4() {
 
 
 	sjs.onHit("menu", "turnInMenu", function(x,y){
+		try{drinkOnScn4.moveTo(1000,500);} // check to see if a drink is present
+		catch{				
+			x.moveTo(x.menuPos[0],x.menuPos[1]);
+			var makeSomething = new sjs.Image("Images/prompt2user.png");
+			makeSomething.moveTo(400,425);
+			makeSomething.node.style.zIndex = 2;
+			var prmpt_Text2 = new sjs.Text("You need to make a drink first!",75,"white");
+			prmpt_Text2.node.style.zIndex = 2;
+			prmpt_Text2.moveTo(490,515);
+			prmpt_Text2.node.style.fontFamily = "Apple Kid";
+			setTimeout(function(){
+				makeSomething.destroy();
+				prmpt_Text2.destroy();
+				return;
+				}, 1500)
+			return;
+		}
 		canChangeScreens = false;
 		able2BTopped = false;
 
@@ -52,8 +69,6 @@ function screen4() {
 		x.moveTo(220,200);
 		x.undraggable();
 		x.unfollow();
-		try{drinkOnScn4.moveTo(1000,500);}
-		catch{console.log("You don't have a drink!")}
 
 		item_whipped.undraggable();
 		item_cara.undraggable();
@@ -116,45 +131,27 @@ function screen4() {
 
 			currentScreen = 5;
 
-			// passes menu image into class (each image is different) so i know what to grade
-			try {
-				customerGRADING = drinksBeingMade[drinkOnScn4.numInLine].customerRating(menuImage.src);
-				if (GcustomerRating1 == undefined){GcustomerRating1 = customerGRADING
-				} else if (GcustomerRating2 == undefined) {GcustomerRating2 = customerGRADING
-				} else if (GcustomerRating3 == undefined){GcustomerRating3 = customerGRADING}
-				transition(4);
+			customerGRADING = drinksBeingMade[drinkOnScn4.numInLine].customerRating(menuImage.src);
+			if (GcustomerRating1 == undefined){GcustomerRating1 = customerGRADING
+			} else if (GcustomerRating2 == undefined) {GcustomerRating2 = customerGRADING
+			} else if (GcustomerRating3 == undefined){GcustomerRating3 = customerGRADING}
+			transition(4);
 
-				drinksBeingMade[drinkOnScn4.numInLine] = undefined;
-				delete(drinksBeingMade[drinkOnScn4.numInLine]); // fully delete the class
+			drinksBeingMade[drinkOnScn4.numInLine] = undefined;
+			delete(drinksBeingMade[drinkOnScn4.numInLine]); // fully delete the class
 
-				drinkOnScn4.destroy();
-				drinkOnScn4 = undefined;
-				delete(drinkOnScn4);
+			drinkOnScn4.destroy();
+			drinkOnScn4 = undefined;
+			delete(drinkOnScn4);
 
-				cupsCurrentlyUsed = cupsCurrentlyUsed - 1;
-				setTimeout(function (){
-					checksForSwitchingScreens(currentScreen,5);
-					currentScreen = 5;
-					screen5(menuImage.src, menuImage.numInLine);
-					canChangeScreens = true;
-					menuImage.destroy();
-				}, 250);
-			}
-			catch{
-				var makeSomething = new sjs.Image("Images/prompt2user.png");
-				makeSomething.moveTo(400,425);
-				makeSomething.node.style.zIndex = 2;
-				var prmpt_Text2 = new sjs.Text("You need to make a drink first!",75,"white");
-				prmpt_Text2.node.style.zIndex = 2;
-				prmpt_Text2.moveTo(490,515);
-				prmpt_Text2.node.style.fontFamily = "Apple Kid";
-				setTimeout(function(){
-					makeSomething.destroy();
-					prmpt_Text2.destroy();
-					return;
-					}, 1500)
-			}
-			// delete menu now? not sure so im not gonna implement it yet
+			cupsCurrentlyUsed = cupsCurrentlyUsed - 1;
+			setTimeout(function (){
+				checksForSwitchingScreens(currentScreen,5);
+				currentScreen = 5;
+				screen5(menuImage.src, menuImage.numInLine);
+				canChangeScreens = true;
+				menuImage.destroy();
+			}, 250);
 		})
 		
 	})

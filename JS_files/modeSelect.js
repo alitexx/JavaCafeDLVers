@@ -130,7 +130,6 @@ function NEXTDAY(){
 	setTimeout(function(){
 		transition(); // num transfered in does nothing
 		setTimeout(function(){
-			window.currentScreen = 1;
 			dayDisplay.destroy();
 			screen1();
 			menuBar();
@@ -165,7 +164,6 @@ function resetGlobals(){
 	isPepperOut = false;
 	drinkOnScn4 = undefined;
 	delete(drinkOnScn4);
-	timeoutTimer = 250;
 
 	FINISHEDCUSTOMERS = 0;
 	cupsCurrentlyUsed = 0;
@@ -181,4 +179,18 @@ function resetGlobals(){
 	delete(NPCstats);
 	customerWaiting = false;
 	secondsUntilSpawn = secondsUntilSpawn - 500;
+
+	drinksBeingMade = {
+		numOne: undefined, // drink 1 of type classDrinks
+		numTwo: undefined, // drink 2 of type classDrinks
+		numThree: undefined // drink 3 of type classDrinks
+	};
+
+	customersBeingServed = { // customer orders you are carrying
+		numOne: undefined,
+		numTwo: undefined,
+		numThree: undefined,
+		numFour: undefined,
+		numFive: undefined,
+	};
 }

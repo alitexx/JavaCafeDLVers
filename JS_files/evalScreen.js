@@ -12,6 +12,7 @@ function evalScreen(){
 
 	setTimeout(function(){
 		hooray.pause();
+		resultsMusic.load();
 		resultsMusic.play();
 		resultsMusic.loop = true;
 	}, 560);
@@ -125,10 +126,11 @@ function spawnButtons(){
 	continueGameBtn = new sjs.Button("Next Day", function (){ // the next level
 		// delete everything from last day
 		resultsMusic.pause();
+		window.currentScreen = 1;
 		transition();// pass in 6 here and delete that screen from here to free up space
 		setTimeout(function(){
 			NEXTDAY();
-			var toBeDeleted = [rating,barrier1,barrier2,continueGameBtn,endGameBtn,bgBar,screen1btn,screen2btn,screen3btn,screen4btn,garbage_btn,scoopOfBeans,moveable_frother,moveable_Lcup1,moveable_Lcup2,moveable_Lcup3,moveable_Scup1,moveable_Scup2,moveable_Scup3,insertedScoop1,insertedScoop2,insertedScoop3,drip1,drip2,drip3,gradingPaper,bgFinal,character,customerReview1,customerReview2,customerReview3,finalScore,totalForFinal,smile1,smile2,smile3,menu1,menu2,menu3,menu4,menu5,awaitingOrderCustomer,clickToTakeOrder,newCustomer,drinksBeingMade[numOne],drinksBeingMade[numTwo],drinksBeingMade[numThree],customersBeingServed[numOne],customersBeingServed[numTwo],customersBeingServed[numThree],customersBeingServed[numFour],customersBeingServed[numFive]];
+			var toBeDeleted = [rating,barrier1,barrier2,continueGameBtn,endGameBtn,bgBar,screen1btn,screen2btn,screen3btn,screen4btn,garbage_btn,scoopOfBeans,moveable_frother,moveable_Lcup1,moveable_Lcup2,moveable_Lcup3,moveable_Scup1,moveable_Scup2,moveable_Scup3,insertedScoop1,insertedScoop2,insertedScoop3,drip1,drip2,drip3,gradingPaper,bgFinal,character,customerReview1,customerReview2,customerReview3,finalScore,totalForFinal,smile1,smile2,smile3,menu1,menu2,menu3,menu4,menu5,awaitingOrderCustomer,clickToTakeOrder,newCustomer,drinksBeingMade,customersBeingServed];
 			toBeDeleted.forEach(function (item, index){ // deletes the items
 				try{ // try and catch here only because of restarting the game
 					item.destroy();

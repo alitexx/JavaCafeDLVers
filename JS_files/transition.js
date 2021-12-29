@@ -1,9 +1,8 @@
 
 
-var timeoutTimer = 250;
-
 function transition(screenNum){
-	if (currentScreen == 6 && timeoutTimer > 3000){
+	var timeoutTimer = 250;
+	if (currentScreen == 6){
 		document.body.classList.add('fade-out_FINAL');
 		timeoutTimer = 3000
 	} else {
@@ -28,7 +27,7 @@ function transition(screenNum){
 		screenBeingDestroyed = [background3,moveToScreen4,scoopInterract1,scoopInterract2,scoopInterract3,station1,station2,station3,frother,constant_Lcup,constant_Scup,timer1,timer2,timer3];
 		break;
 		case 4: // screen 4
-		screenBeingDestroyed = [background4,moveToEndScreen,turnInMenu,item_whipped,item_cara,item_choco,item_sugarcube,item_peppermint,item_cinnamon,button1_scn4,button2_scn4,button3_scn4,button4_scn4,button5_scn4,button6_scn4];
+		screenBeingDestroyed = [background4,moveToEndScreen,turnInMenu,item_whipped,item_cara,item_choco,item_sugarcube,item_peppermint,item_cinnamon,button1_scn4,button2_scn4,button3_scn4,button4_scn4,button5_scn4,button6_scn4,infoBlock];
 		break;
 		case 5: // finished drinks
 		screenBeingDestroyed = [background5,customerImage5,finished_drink,textBbl,customerRatingDisplayed,face_Score,barrier1,barrier2,continueBtn];
@@ -51,7 +50,7 @@ function transition(screenNum){
 		}
 		});
 	setTimeout(function(){ // fade back in
-	if (currentScreen == 6 && timeoutTimer > 3000){
+	if (currentScreen == 6){
 		document.body.classList.remove('fade-out_FINAL');
 	} else {document.body.classList.remove('fade-out');}
 	}, timeoutTimer);

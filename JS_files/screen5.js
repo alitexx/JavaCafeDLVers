@@ -90,6 +90,7 @@ function screen5(menuImage, spotToBeDeleted){
 			audioS5.pause();
 			FINISHEDCUSTOMERS = FINISHEDCUSTOMERS + 1 // add one to the tally of customers completed
 			if (FINISHEDCUSTOMERS >= 3 && endlessMode == false){
+				hooray.load();
 				hooray.play();
 				currentScreen = 6;
 				transition(5);

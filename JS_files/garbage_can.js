@@ -49,18 +49,32 @@ function deleteItem(){
 	}
 }
 function deleteCups(cupName){
-	console.log(cupName);
 	cupName.node.addEventListener("click", () => { // when you click scoop of beans
-		if (cupsCanBeDeleted == true && cupName.isBeingBrewed == false){
-			console.log(station1Taken);
-			console.log(station2Taken);
-			console.log(station3Taken);
+		if (cupsCanBeDeleted == true && cupName.isBeingBrewed == false && canChangeScreens == true){
 			cupsCanBeDeleted = false;
 			deleteItem_Running = false;
 			try{ // delete a class if it exists
 				drinksBeingMade[cupName.numInLine] = undefined;
 				delete(drinksBeingMade[cupName.numInLine]);
+				drinksBeingMade[cupName.numInLine] = undefined;
+				if (currentScreen == 4){
+					drinkOnScn4 = undefined;
+					delete(drinkOnScn4);
+				}
 				} catch{};
+
+			switch(cupName.station){
+				case "station1Taken":
+					station1Taken = false;
+				break;
+				case "station2Taken":
+					station2Taken = false;
+				break;
+				case "station3Taken":
+					station3Taken = false;
+				break;
+			}
+
 			cupName.destroy();
 			cupName = undefined;
 			delete(cupName);

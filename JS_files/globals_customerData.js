@@ -264,7 +264,7 @@ function spawnNPC(customerComingIn, imageForspawn, talking_gif){ // CHECKS IF SO
 			if (slotOpen != 0) {
 					customersBeingServed[slotOpen] = customerComingIn; // sets null as their name
 					customerWaiting = true; // someone is here
-					if (window.currentScreen >= 5){ // makes sure player isnt being graded
+					if (window.currentScreen < 5){ // makes sure player isnt being graded
 						doorbell.play();
 					}
 				}

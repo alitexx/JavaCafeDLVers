@@ -29,6 +29,8 @@ class Drink { // broken in internet explorer
                 drinkItself.draggable();
                 drinkItself.type = "doneBrewing";
                 drinkItself.isBeingBrewed = false;
+                drinkItself.station = undefined;
+                delete(drinksBeingMade[drinkItself.station]);
                 //window["timer"+area]
                 window["timer"+area].setImage("Images/brewTimer/timer_null.png");
                 window["insertedScoop"+area].destroy();

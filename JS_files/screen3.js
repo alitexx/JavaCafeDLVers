@@ -137,16 +137,6 @@ function screen3() {
 		checkForDrinkSpot("SMALL");
 	});
 
-
-
-/* 	REMEMBER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! VERY IMPORTANT
-
-FIND NAME OF ACTUAL CUP WHEN PASSED INTO STATION, NOT JUST THE CONTENTS!! LIKE moveable_Lcup1;
-
-PASS THAT NAME INTO THE CLASS
-
-
-*/
 	sjs.onHit("Frother", "doneBrewing", function(f,cup){
 		cup.unfollow();
 		cup.undraggable();
@@ -212,6 +202,7 @@ PASS THAT NAME INTO THE CLASS
 				x.moveTo(140,400);
 				x.unfollow();
 				x.undraggable();
+				x.station = "station1Taken"; // for deletion
 				checkForDrinkMaking(scoop1Taken, station1Taken, "1");
 				}
 			break;
@@ -221,6 +212,7 @@ PASS THAT NAME INTO THE CLASS
 				x.moveTo(490,400);
 				x.unfollow();
 				x.undraggable();
+				x.station = "station2Taken"; // for deletion
 				checkForDrinkMaking(scoop2Taken, station2Taken, "2");
 				}
 			break;
@@ -230,6 +222,7 @@ PASS THAT NAME INTO THE CLASS
 				x.moveTo(820,400);
 				x.unfollow();
 				x.undraggable();
+				x.station = "station3Taken"; // for deletion
 				checkForDrinkMaking(scoop3Taken, station3Taken, "3");
 				}
 			break;
@@ -304,6 +297,7 @@ PASS THAT NAME INTO THE CLASS
 
 function checkForDrinkSpot(drinkType){ // change
 	for (var [key, value] of Object.entries(drinksBeingMade)) {
+		console.log(value);
 		if (window.cupsCurrentlyUsed >= 3){ // if 3 or more cups are out
 			console.log("NO MORE CUPS! >:(");
 			var tooManyPrompt = new sjs.Image("Images/prompt2user.png");
@@ -489,6 +483,7 @@ function spawnInCupRequested(size, cupsBeingUsed, key4numInLine){
 			window["moveable_Lcup"+cupsBeingUsed.toString()].canBrew = true; // CHECKs if can be cooked
 			window["moveable_Lcup"+cupsBeingUsed.toString()].numInLine = key4numInLine.toString(); // where is it in the dict
 			window["moveable_Lcup"+cupsBeingUsed.toString()].isBeingBrewed = false;
+			window["moveable_Lcup"+cupsBeingUsed.toString()].station = null;
 			window["moveable_Lcup"+cupsBeingUsed.toString()].node.style.zIndex = 1;
 			window["moveable_Lcup"+cupsBeingUsed.toString()].moveTo(1200,200);
 			window["moveable_Lcup"+cupsBeingUsed.toString()].type = "Cup";
