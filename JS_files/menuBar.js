@@ -6,12 +6,15 @@
 var garbage_btn;
 var canChangeScreens = true; // makes sure nothing else is happening so no glitches
 
+
+var bgBar; var screen1btn; var screen2btn; var screen3btn; var screen4btn;
+
 function menuBar() {
-	var bgBar = new sjs.Image("Images/MenuBar.png");
+	bgBar = new sjs.Image("Images/MenuBar.png");
 	bgBar.moveTo(175,0);
 	bgBar.type = "screenSelector";
 	bgBar.node.style.zIndex = 5;
-	var screen1btn = new sjs.Button("Order", function goToScreen1(){
+	screen1btn = new sjs.Button("Order", function goToScreen1(){
 		btn_clickSFX.play();
 		if (currentScreen != 1 && canChangeScreens == true){
 		transition(currentScreen); // deletion goes on in here now
@@ -32,7 +35,7 @@ function menuBar() {
 	screen1btn.moveTo(250, 25);
 
 
-	var screen2btn = new sjs.Button("Prep", function goToScreen2(){
+	screen2btn = new sjs.Button("Prep", function goToScreen2(){
 		btn_clickSFX.play();
 		if (currentScreen != 2 && canChangeScreens == true){
 		transition(currentScreen);
@@ -52,7 +55,7 @@ function menuBar() {
 	screen2btn.type = "screenSelector"
 	screen2btn.moveTo(550, 25);
 
-	var screen3btn = new sjs.Button("Brew", function goToScreen3(){
+	screen3btn = new sjs.Button("Brew", function goToScreen3(){
 		btn_clickSFX.play();
 		if (currentScreen != 3 && canChangeScreens == true){
 		transition(currentScreen);
@@ -73,7 +76,7 @@ function menuBar() {
 	screen3btn.moveTo(850, 25);
 
 
-	var screen4btn = new sjs.Button("Extras", function goToScreen4(){
+	screen4btn = new sjs.Button("Extras", function goToScreen4(){
 		btn_clickSFX.play();
 		if (currentScreen != 4 && canChangeScreens == true){
 		transition(currentScreen);

@@ -1,7 +1,7 @@
 var drinksBeingMade = {
-	numOne: null, // drink 1 of type classDrinks
-	numTwo: null, // drink 2 of type classDrinks
-	numThree: null // drink 3 of type classDrinks
+	numOne: undefined, // drink 1 of type classDrinks
+	numTwo: undefined, // drink 2 of type classDrinks
+	numThree: undefined // drink 3 of type classDrinks
 };
 
 
@@ -28,11 +28,11 @@ var btn_clickSFX = new Audio("Audio/button_click.wav");
 
 
 var customersBeingServed = { // customer orders you are carrying
-	numOne: null,
-	numTwo: null,
-	numThree: null,
-	numFour: null,
-	numFive: null,
+	numOne: undefined,
+	numTwo: undefined,
+	numThree: undefined,
+	numFour: undefined,
+	numFive: undefined,
 };
 
 /*var ALLcustomerOrders = {
@@ -255,8 +255,9 @@ function spawnNPC(customerComingIn, imageForspawn, talking_gif){ // CHECKS IF SO
 		if (value == customerComingIn) {return null;}
 		} // end for
 		for (const [key, value] of Object.entries(customersBeingServed)) { // checks if customer picked is here
-			if (value == null){
+			if (typeof value == "undefined"){
 				slotOpen = key; //assign the first open slot to spamton
+				console.log("this works");
 				break;
 			} else {slotOpen = 0;}
 			}// end for

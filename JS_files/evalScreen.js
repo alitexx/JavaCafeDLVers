@@ -1,12 +1,15 @@
 
-var gradingPaper; var bgFinal; var character; var customerReview1; var customerReview2; var customerReview3; var finalScore; var totalForFinal = 0;
+var gradingPaper; var bgFinal; var character; var customerReview1; var customerReview2; var customerReview3; var finalScore; var totalForFinal; var rating;
 var smile1; var smile2; var smile3;
 
 var hooray = new Audio("Audio/day_complete.mp3");
 
+var resultsMusic = new Audio("Audio/6results.mp3");
+
 function evalScreen(){
 
-	var resultsMusic = new Audio("Audio/6results.mp3");
+	totalForFinal = 0;
+
 	setTimeout(function(){
 		hooray.pause();
 		resultsMusic.play();
@@ -50,32 +53,6 @@ function evalScreen(){
 		}, 750);
 	}, 4250);
 
-
-
-
-
-
-	/* TO DO :
-	PUT TEXT THAT DISPLAYS EACH ORDER AND HOW YOU DID
-	THEN, PUT TEXT THAT SHOWS UR OVERALL GRADE FOR THE DAY
-	YAHOO!!!!!!!! DONEZO
-	LOOP TO THE NEXT DAY?
-
-	GcustomerRating1
-
-
-	perfect = 2 points
-	ok = 1 point
-	bad = 0 points
-
-	6 = S
-	5 = A
-	4 = B
-	3 = C
-	2 = D
-	1 = E
-	0 = F
-	*/
 }
 
 function displayReviews(num){
@@ -114,7 +91,6 @@ function displayReviews(num){
 }
 
 function findGrade(){
-	var rating;
 	console.log(totalForFinal);
 	switch(totalForFinal){
 		case 0: // player gets F
@@ -145,7 +121,27 @@ function findGrade(){
 }
 
 function spawnButtons(){
+	dayCount = dayCount + 1;
 	continueGameBtn = new sjs.Button("Next Day", function (){ // the next level
+		// delete everything from last day
+		resultsMusic.pause();
+		transition();// pass in 6 here and delete that screen from here to free up space
+		setTimeout(function(){
+			NEXTDAY();
+			var toBeDeleted = [rating,barrier1,barrier2,continueGameBtn,endGameBtn,bgBar,screen1btn,screen2btn,screen3btn,screen4btn,garbage_btn,scoopOfBeans,moveable_frother,moveable_Lcup1,moveable_Lcup2,moveable_Lcup3,moveable_Scup1,moveable_Scup2,moveable_Scup3,insertedScoop1,insertedScoop2,insertedScoop3,drip1,drip2,drip3,gradingPaper,bgFinal,character,customerReview1,customerReview2,customerReview3,finalScore,totalForFinal,smile1,smile2,smile3,menu1,menu2,menu3,menu4,menu5,awaitingOrderCustomer,clickToTakeOrder,newCustomer,drinksBeingMade[numOne],drinksBeingMade[numTwo],drinksBeingMade[numThree],customersBeingServed[numOne],customersBeingServed[numTwo],customersBeingServed[numThree],customersBeingServed[numFour],customersBeingServed[numFive]];
+			toBeDeleted.forEach(function (item, index){ // deletes the items
+				try{ // try and catch here only because of restarting the game
+					item.destroy();
+					item = undefined;
+					delete(item);
+				}
+				catch{
+					item = undefined;
+					delete(item);
+				}
+			resetGlobals();
+			});
+		},250);
 	});
 
 	continueGameBtn.node.style.zIndex = 70;

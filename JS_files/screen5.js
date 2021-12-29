@@ -89,7 +89,7 @@ function screen5(menuImage, spotToBeDeleted){
 		continueBtn = new sjs.Button("Click To Continue", function (){
 			audioS5.pause();
 			FINISHEDCUSTOMERS = FINISHEDCUSTOMERS + 1 // add one to the tally of customers completed
-			if (FINISHEDCUSTOMERS >= 3){
+			if (FINISHEDCUSTOMERS >= 3 && endlessMode == false){
 				hooray.play();
 				currentScreen = 6;
 				transition(5);

@@ -1,10 +1,9 @@
 
 
-
+var timeoutTimer = 250;
 
 function transition(screenNum){
-	var timeoutTimer = 250;
-	if (currentScreen == 6){
+	if (currentScreen == 6 && timeoutTimer > 3000){
 		document.body.classList.add('fade-out_FINAL');
 		timeoutTimer = 3000
 	} else {
@@ -17,7 +16,7 @@ function transition(screenNum){
 		screenBeingDestroyed = [background,clouds,cafeIcon,tree1,tree2,barrier1,barrier2,beginTXT,titleJavaCafe];
 		break;
 		case "mainMenu": // main menu
-		screenBeingDestroyed = [backgroundMMS,MENUtxt,campaignBtn,customBtn];
+		screenBeingDestroyed = [backgroundMMS,MENUtxt,campaignBtn,customBtn,creditsBtn];
 		break;
 		case 1: // screen 1
 		screenBeingDestroyed = [background1, player]; // start here
@@ -34,42 +33,28 @@ function transition(screenNum){
 		case 5: // finished drinks
 		screenBeingDestroyed = [background5,customerImage5,finished_drink,textBbl,customerRatingDisplayed,face_Score,barrier1,barrier2,continueBtn];
 		break;
+		//case 6: // finished drinks
+		//screenBeingDestroyed = [barrier1,barrier2,continueGameBtn,endGameBtn,bgBar,screen1btn,screen2btn,screen3btn,screen4btn,garbage_btn,scoopOfBeans,moveable_frother,moveable_Lcup1,moveable_Lcup2,moveable_Lcup3,moveable_Scup1,moveable_Scup2,moveable_Scup3,insertedScoop1,insertedScoop2,insertedScoop3,drip1,drip2,drip3,gradingPaper,bgFinal,character,customerReview1,customerReview2,customerReview3,finalScore,totalForFinal,smile1,smile2,smile3,menu1,menu2,menu3,menu4,menu5,awaitingOrderCustomer,clickToTakeOrder,newCustomer];
+		//break;
 	}
 
 
 	screenBeingDestroyed.forEach(function (item, index) { // deletes the items
-		item.destroy();
-		item = undefined;
-		delete(item);
+		try{ // try and catch here only because of restarting the game
+			item.destroy();
+			item = undefined;
+			delete(item);
+		}
+		catch{
+			item = undefined;
+			delete(item);
+		}
 		});
 	setTimeout(function(){ // fade back in
-	if (currentScreen == 6){
+	if (currentScreen == 6 && timeoutTimer > 3000){
 		document.body.classList.remove('fade-out_FINAL');
 	} else {document.body.classList.remove('fade-out');}
 	}, timeoutTimer);
 } // end transition
-
-
-function getSoundAndFadeAudio(audiosnippetId) {
-
-    var sound = document.getElementById(audiosnippetId);
-
-    // Set the point in playback that fadeout begins. This is for a 2 second fade out.
-    var fadePoint = sound.duration - 2; 
-
-    var fadeAudio = setInterval(function () {
-
-        // Only fade if past the fade out point or not at zero already
-        if ((sound.currentTime >= fadePoint) && (sound.volume != 0.0)) {
-            sound.volume -= 0.1;
-        }
-        // When volume at zero stop all the intervalling
-        if (sound.volume === 0.0) {
-            clearInterval(fadeAudio);
-        }
-    }, 200);
-
-}
-
 
 

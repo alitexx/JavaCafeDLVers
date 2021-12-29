@@ -24,6 +24,26 @@ function screen4() {
 	turnInMenu.type = "turnInMenu";
 	turnInMenu.node.style.zIndex = 0;
 
+	infoBlock = new sjs.Image("Images/screen4Items/INFO.gif");
+	infoBlock.moveTo(1100,420);
+
+	infoBlock.onMouseDown(function(){
+		var infoScrn = new sjs.Image("Images/screen4Items/INFO.png");
+		infoScrn.node.style.zIndex = 10;
+		infoScrn.moveTo(400,350);
+		var warningTxt = new sjs.Text("Remember to put toppings on in the order the customer told you!",75,"DeepPink");
+		warningTxt.node.style.zIndex = 10;
+		warningTxt.moveTo(435,400);
+		warningTxt.node.style.fontFamily = "Apple Kid";
+		setTimeout(function (){
+			infoScrn.destroy();
+			warningTxt.destroy();
+		}, 2500);
+
+	})
+	
+
+
 	sjs.onHit("menu", "turnInMenu", function(x,y){
 		canChangeScreens = false;
 		able2BTopped = false;

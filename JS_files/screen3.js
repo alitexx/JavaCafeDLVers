@@ -304,7 +304,7 @@ PASS THAT NAME INTO THE CLASS
 
 function checkForDrinkSpot(drinkType){ // change
 	for (var [key, value] of Object.entries(drinksBeingMade)) {
-		if (window.cupsCurrentlyUsed >= 2){ // if 3 or more cups are out
+		if (window.cupsCurrentlyUsed >= 3){ // if 3 or more cups are out
 			console.log("NO MORE CUPS! >:(");
 			var tooManyPrompt = new sjs.Image("Images/prompt2user.png");
 			tooManyPrompt.moveTo(400,425);
@@ -319,7 +319,7 @@ function checkForDrinkSpot(drinkType){ // change
 				return;
 				}, 1500)
 			break;
-		} else if (value == null){ // if spot is open SPAWNS CUP
+		} else if (typeof value == "undefined"){ // if spot is open SPAWNS CUP
 			cupsCurrentlyUsed = cupsCurrentlyUsed+1;
 			if (drinkType == "LARGE"){
 				spawnInCupRequested("LARGE",cupsCurrentlyUsed, key);
