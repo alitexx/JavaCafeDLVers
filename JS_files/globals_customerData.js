@@ -169,7 +169,7 @@ function findNewCustomer(){ // FINDS A NEW CUSTOMER TO BE SPAWNED, DOESNT DO ANY
 
 
 var customerWaiting = false; // checks if theres a customer
-var secondsUntilSpawn = 25000; // changes throughout the game, made it fast for testing
+var secondsUntilSpawn = 30000; // changes throughout the game, made it fast for testing
 
 
 
@@ -197,12 +197,10 @@ function spawningInACustomer(exception){ // ACTUALLY SPAWNS THE GRAPHICS
 		}
 		if (window.currentScreen == 1){
 			try {
-				console.log("trying to spawn");
 				awaitingOrderCustomer.setImage(NPCstats[0]);
 				clickToTakeOrder.setImage("Images/customerData/newCustomer.gif");
 			}
 			catch {
-				console.log("catch on spawn");
 				awaitingOrderCustomer = new sjs.Image(NPCstats[0]);
 				clickToTakeOrder = new sjs.Image("Images/customerData/newCustomer.gif");
 			}		
@@ -256,8 +254,7 @@ function spawnNPC(customerComingIn, imageForspawn, talking_gif){ // CHECKS IF SO
 		} // end for
 		for (const [key, value] of Object.entries(customersBeingServed)) { // checks if customer picked is here
 			if (typeof value == "undefined"){
-				slotOpen = key; //assign the first open slot to spamton
-				console.log("this works");
+				slotOpen = key; //assign the first open slot to customer
 				break;
 			} else {slotOpen = 0;}
 			}// end for

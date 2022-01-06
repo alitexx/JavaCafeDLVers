@@ -89,6 +89,7 @@ function screen5(menuImage, spotToBeDeleted){
 		continueBtn = new sjs.Button("Click To Continue", function (){
 			audioS5.pause();
 			FINISHEDCUSTOMERS = FINISHEDCUSTOMERS + 1 // add one to the tally of customers completed
+			if (endlessMode == true){displayCustomersServed.setText(["Customers served : "+FINISHEDCUSTOMERS.toString()],75,"white");}; // change if player is in endless mode
 			if (FINISHEDCUSTOMERS >= 3 && endlessMode == false){
 				hooray.load();
 				hooray.play();

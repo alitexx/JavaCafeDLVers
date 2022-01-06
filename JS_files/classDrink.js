@@ -24,7 +24,6 @@ class Drink { // broken in internet explorer
   var onClickDrink;
           onClickDrink = drinkItself.onMouseDown(function(){
             // switch based on slotnum eventually
-            console.log("drink has been clicked");
                 drinkItself.canBrew = false;
                 drinkItself.draggable();
                 drinkItself.type = "doneBrewing";
@@ -54,8 +53,6 @@ class Drink { // broken in internet explorer
     } // end for
     if (valueIsTopping != true){
       this.toppings.push(newTopping);
-      console.log("New topping added :");
-      console.log(newTopping);
     }
   }// end addtopping
 
@@ -66,10 +63,6 @@ class Drink { // broken in internet explorer
 
   customerRating(orderForm)
   {
-    console.log(this.drinkType)
-    console.log(this.cupSize)
-    console.log(this.isLatte)
-    console.log(this.toppings)
   	// figure out the score based on actual order */
     switch(orderForm){
       case("Images/customerData/spamton_Menu.png"):
@@ -140,13 +133,10 @@ class Drink { // broken in internet explorer
 
     console.log(this.points);
     if (this.points <= 35){
-      console.log("returning BAD");
       return ["BAD", "Images/face_Angry.png", 0];
     } else if (this.points > 35 && this.points <= 70){
-      console.log("returning OK");
       return ["OK", "Images/face_Neutral.png", 1];
     } else if (this.points >= 75){ // 75 is perfect
-      console.log("returning PERFECT");
       return ["PERFECT", "Images/face_Happy.png", 2];
     }
 }

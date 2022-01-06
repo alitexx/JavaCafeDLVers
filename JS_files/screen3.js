@@ -138,6 +138,7 @@ function screen3() {
 	});
 
 	sjs.onHit("Frother", "doneBrewing", function(f,cup){
+		canChangeScreens = false;
 		cup.unfollow();
 		cup.undraggable();
 		var pouringSFX = new Audio("Audio/pouringMilk.wav");
@@ -147,12 +148,13 @@ function screen3() {
 		pouring.moveTo(cup.x, (cup.y - 100));
 		drinksBeingMade[cup.numInLine].addLatteMilk();
 		setTimeout(function(){
+			canChangeScreens = true;
 			frotherOut = false;
 			cup.follow(sjs.mouse);
 			cup.draggable();
 			pouring.destroy();
 			pouringSFX = null;
-		}, 3500);
+		}, 3000);
 	})
 
 
@@ -160,7 +162,6 @@ function screen3() {
 
 	sjs.onHit("doneBrewing", "moveBlock", function(x,y){
 		if (typeof drinkOnScn4 == "undefined"){
-		console.log("I am moving to screen 4!")
 		x.moveTo(645,470); // set move to in the middle
 		x.undraggable();
 		x.unfollow();
@@ -198,7 +199,6 @@ function screen3() {
 			case station1 :
 			if (station1Taken == false && currentScreen == 3 && x.canBrew == true){
 				station1Taken = x;
-				console.log(x);
 				x.moveTo(140,400);
 				x.unfollow();
 				x.undraggable();
@@ -297,7 +297,6 @@ function screen3() {
 
 function checkForDrinkSpot(drinkType){ // change
 	for (var [key, value] of Object.entries(drinksBeingMade)) {
-		console.log(value);
 		if (window.cupsCurrentlyUsed >= 3){ // if 3 or more cups are out
 			console.log("NO MORE CUPS! >:(");
 			var tooManyPrompt = new sjs.Image("Images/prompt2user.png");
@@ -360,7 +359,6 @@ function brewingTimer(area, typeOfDrink, drip, drinkSlot){
 			setTimeout(function(){
 				if (timerComplete1 == true){ // TADA!!!!!!!!!!!!!!!!!!!!!!!!!!! DRINK IS DONE
 					var index = drinkSlot.numInLine
-					console.log(typeof drinksBeingMade[index])
 					drinksBeingMade[index].onClickEventS3(drinkSlot, "1");
 					}
 				}, 8600);
@@ -370,7 +368,6 @@ function brewingTimer(area, typeOfDrink, drip, drinkSlot){
 			setTimeout(function(){
 				if (timerComplete2 == true){
 					var index = drinkSlot.numInLine
-					console.log(typeof drinksBeingMade[index])
 					drinksBeingMade[index].onClickEventS3(drinkSlot, "2");
 					}
 				}, 8600);
@@ -380,7 +377,6 @@ function brewingTimer(area, typeOfDrink, drip, drinkSlot){
 			setTimeout(function(){
 				if (timerComplete3 == true){ // TADA!!!!!!!!!!!!!!!!!!!!!!!!!!! DRINK IS DONE
 					var index = drinkSlot.numInLine
-					console.log(typeof drinksBeingMade[index])
 					drinksBeingMade[index].onClickEventS3(drinkSlot, "3");
 					}
 				}, 8600);

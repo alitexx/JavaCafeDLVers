@@ -6,6 +6,8 @@
 var garbage_btn;
 var canChangeScreens = true; // makes sure nothing else is happening so no glitches
 
+var displayCustomersServed; // for endless
+
 
 var bgBar; var screen1btn; var screen2btn; var screen3btn; var screen4btn;
 
@@ -113,12 +115,22 @@ function menuBar() {
 		// a function that lets you click on the item to delete
 		if (deleteItem_Running == true){
 			deleteItem_Running = false;
+			cupsCanBeDeleted = false;
 			deletebbl.destroy();
 			prompt_Text.destroy();
 		} else {
 			deleteItem();
 		} // GO TO GARBAGE_CAN.JS
 	});
+
+	switch(endlessMode){
+		case true :
+			displayCustomersServed = new sjs.Text(["Customers served : "+FINISHEDCUSTOMERS.toString()],75,"white");
+			displayCustomersServed.moveTo(150,120);
+			displayCustomersServed.node.style.zIndex = 20;
+			displayCustomersServed.node.style.fontFamily = "Apple Kid";
+		break;
+	}
 }
 
 
@@ -281,11 +293,9 @@ function checksForSwitchingScreens(leaving, entering){ // EVERYTHING that must b
 			if (window.customerWaiting == true){
 				try{
 					clickToTakeOrder.node.style.zIndex = 10;
-					console.log(awaitingOrderCustomer);
 					awaitingOrderCustomer.node.style.zIndex = 10;
 				}
 				catch{
-					console.log("the catch has happened");
 					spawningInACustomer(true);
 				}
 			}

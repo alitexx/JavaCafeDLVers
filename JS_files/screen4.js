@@ -31,9 +31,9 @@ function screen4() {
 		var infoScrn = new sjs.Image("Images/screen4Items/INFO.png");
 		infoScrn.node.style.zIndex = 10;
 		infoScrn.moveTo(400,350);
-		var warningTxt = new sjs.Text("Remember to put toppings on in the order the customer told you!",75,"DeepPink");
+		var warningTxt = new sjs.Text("Be sure to put toppings on <br>in the correct order!",90,"DeepPink");
 		warningTxt.node.style.zIndex = 10;
-		warningTxt.moveTo(435,400);
+		warningTxt.moveTo(435,450);
 		warningTxt.node.style.fontFamily = "Apple Kid";
 		setTimeout(function (){
 			infoScrn.destroy();
@@ -278,6 +278,7 @@ function screen4() {
 
 function createDRIP(shotAdded, imageforDRIP, drinkOnScn4){
 		if (typeof drinkOnScn4 != "undefined" && able2BTopped == true){ // checks if there actually a cup here
+			canChangeScreens = false;
 			drinksBeingMade[drinkOnScn4.numInLine].addTopping(shotAdded);
 			var drip = new sjs.Image(imageforDRIP);
 			drip.moveTo(749,429.5);
@@ -285,9 +286,10 @@ function createDRIP(shotAdded, imageforDRIP, drinkOnScn4){
 			var pouring = new Audio("Audio/screen4Pouring.wav");
 			pouring.play();
 			setTimeout(function (){
+				canChangeScreens = true;
 				drip.destroy();
 				pouring = null;
-			}, 3000);
+			}, 2000);
 		}
 }
 

@@ -92,7 +92,6 @@ function displayReviews(num){
 }
 
 function findGrade(){
-	console.log(totalForFinal);
 	switch(totalForFinal){
 		case 0: // player gets F
 		rating = new sjs.Text("F",300,"DarkSlateBlue");

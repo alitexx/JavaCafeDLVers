@@ -63,6 +63,7 @@ function mainModeSelect() {
 
 
 		customBtn = new sjs.Button("Endless", function(){ // add a counter in this mode to see how many people you've served
+			secondsUntilSpawn = 17500; // customers come in faster
 			btnClickMenu.play();
 			endlessMode = true;
 			onBeginAudio = undefined;
@@ -101,10 +102,10 @@ function mainModeSelect() {
 				creditsOpen = true;
 				var creditsBG = new sjs.Image("Images/credits.png");
 				creditsBG.moveTo(260,145);
-				var textCredits = new sjs.Text("Sorry im working on this text rn just exit",100,"white");
+				var textCredits = new sjs.Text("Special thanks to Gino and Rachel for <br>making character sprites and testing!<br>Thanks to my dad for helping me with <br>debugging! You guys rock! :) <br><br> And of course, thank YOU for playing!",100,"white");
 				textCredits.node.style.zIndex = 2;
 				textCredits.node.style.fontFamily =  "Apple Kid";
-				textCredits.moveTo(500,350);
+				textCredits.moveTo(310,260);
 				var exitBtn = new sjs.Button("X", function(){
 					creditsOpen = false;
 					creditsBG.destroy();
@@ -186,7 +187,10 @@ function resetGlobals(){
 	NPCstats = undefined;
 	delete(NPCstats);
 	customerWaiting = false;
-	secondsUntilSpawn = secondsUntilSpawn - 500;
+	secondsUntilSpawn = secondsUntilSpawn - 2000;
+	if (secondsUntilSpawn < 10000){
+		secondsUntilSpawn = 10000;
+	}
 
 	drinksBeingMade = {
 		numOne: undefined, // drink 1 of type classDrinks
